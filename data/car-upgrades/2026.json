@@ -1,0 +1,4636 @@
+{
+  "year": 2026,
+  "collected": "2026-11-16T06:43:18.473Z",
+  "publisher": "FIA",
+  "meetings": [
+    {
+      "key": 1279,
+      "name": "Australian Grand Prix",
+      "page": "https://www.fia.com/documents/event/Australian%20Grand%20Prix",
+      "source": "https://www.fia.com/system/files/decision-document/2026_australian_grand_prix_-_car_presentation_submissions.pdf",
+      "status": "reviewed",
+      "teams": [
+        {
+          "team": "McLaren",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Floor",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Rear Suspension",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 2
+            }
+          ]
+        },
+        {
+          "team": "Mercedes",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Bodywork",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "흡입구 변경",
+              "page": 4
+            },
+            {
+              "component": "Front Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "캠버 변경",
+              "page": 4
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "캠버 변경",
+              "page": 4
+            }
+          ]
+        },
+        {
+          "team": "Red Bull Racing",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "다운포스",
+              "change": "규정 대응",
+              "detail": "",
+              "page": 6
+            },
+            {
+              "component": "Nose",
+              "purpose": "다운포스",
+              "change": "규정 대응",
+              "detail": "",
+              "page": 6
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "규정 대응",
+              "detail": "",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "team": "Ferrari",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "폭 변경 · 시위 변경",
+              "page": 8
+            },
+            {
+              "component": "Floor Body / Diffuser",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 8
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 8
+            }
+          ]
+        },
+        {
+          "team": "Williams",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Coke/Engine Cover",
+              "purpose": "냉각",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 10
+            },
+            {
+              "component": "Front Wing Endplate",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "엔드플레이트 변경",
+              "page": 10
+            },
+            {
+              "component": "Floor",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 10
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 10
+            }
+          ]
+        },
+        {
+          "team": "Racing Bulls",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Floor Body",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 12
+            },
+            {
+              "component": "Coke/Engine Cover",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 12
+            },
+            {
+              "component": "Cooling Louvres",
+              "purpose": "냉각",
+              "change": "서킷 특화 사양",
+              "detail": "루버 변경",
+              "page": 12
+            },
+            {
+              "component": "Rear Corner",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 12
+            }
+          ]
+        },
+        {
+          "team": "Aston Martin",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 14
+            },
+            {
+              "component": "Front Wing Endplate",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "엔드플레이트 변경",
+              "page": 14
+            },
+            {
+              "component": "Nose",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 14
+            },
+            {
+              "component": "Sidepod Inlet",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "흡입구 변경",
+              "page": 14
+            },
+            {
+              "component": "Coke/Engine Cover",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 14
+            },
+            {
+              "component": "Diffuser",
+              "purpose": "다운포스",
+              "change": "규정 대응",
+              "detail": "펜스 변경",
+              "page": 14
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "설치각 변경",
+              "page": 14
+            }
+          ]
+        },
+        {
+          "team": "Haas F1 Team",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "다운포스",
+              "change": "규정 대응",
+              "detail": "",
+              "page": 16
+            },
+            {
+              "component": "Front Wing Endplate",
+              "purpose": "기류 정돈",
+              "change": "규정 대응",
+              "detail": "엔드플레이트 변경",
+              "page": 16
+            },
+            {
+              "component": "Floor Body",
+              "purpose": "다운포스",
+              "change": "규정 대응",
+              "detail": "",
+              "page": 16
+            },
+            {
+              "component": "Floor Edge",
+              "purpose": "기류 정돈",
+              "change": "규정 대응",
+              "detail": "가장자리 변경",
+              "page": 16
+            }
+          ]
+        },
+        {
+          "team": "Audi",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 21
+            },
+            {
+              "component": "Sidepod Inlet",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 21
+            },
+            {
+              "component": "Sidepod Body",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 21
+            }
+          ]
+        },
+        {
+          "team": "Alpine",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "다운포스",
+              "change": "규정 대응",
+              "detail": "",
+              "page": 19
+            },
+            {
+              "component": "Coke/Engine Cover",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 19
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "규정 대응",
+              "detail": "",
+              "page": 19
+            }
+          ]
+        },
+        {
+          "team": "Cadillac",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "폭 변경",
+              "page": 23
+            },
+            {
+              "component": "Front Wing Endplate",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 23
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 23
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": 1280,
+      "name": "Chinese Grand Prix",
+      "page": "https://www.fia.com/documents/event/Chinese%20Grand%20Prix",
+      "source": "https://www.fia.com/system/files/decision-document/2026_chinese_grand_prix_-_car_presentation_submissions.pdf",
+      "status": "reviewed",
+      "teams": [
+        {
+          "team": "McLaren",
+          "status": "none",
+          "page": 2,
+          "items": []
+        },
+        {
+          "team": "Mercedes",
+          "status": "none",
+          "page": 3,
+          "items": []
+        },
+        {
+          "team": "Red Bull Racing",
+          "status": "none",
+          "page": 4,
+          "items": []
+        },
+        {
+          "team": "Ferrari",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Halo",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 5
+            }
+          ]
+        },
+        {
+          "team": "Williams",
+          "status": "none",
+          "page": 7,
+          "items": []
+        },
+        {
+          "team": "Racing Bulls",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 8
+            }
+          ]
+        },
+        {
+          "team": "Aston Martin",
+          "status": "none",
+          "page": 10,
+          "items": []
+        },
+        {
+          "team": "Haas F1 Team",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Impact Structure Rear Impact Structure",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 11
+            }
+          ]
+        },
+        {
+          "team": "Audi",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 12
+            },
+            {
+              "component": "Nose",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 12
+            }
+          ]
+        },
+        {
+          "team": "Alpine",
+          "status": "none",
+          "page": 14,
+          "items": []
+        },
+        {
+          "team": "Cadillac",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Diffuser",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 15
+            },
+            {
+              "component": "Mirror Stay",
+              "purpose": "구조 개선",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": 1281,
+      "name": "Japanese Grand Prix",
+      "page": "https://www.fia.com/documents/event/Japanese%20Grand%20Prix",
+      "source": "https://www.fia.com/system/files/decision-document/2026_japanese_grand_prix_-_car_presentation_submissions.pdf",
+      "status": "reviewed",
+      "teams": [
+        {
+          "team": "McLaren",
+          "status": "none",
+          "page": 2,
+          "items": []
+        },
+        {
+          "team": "Mercedes",
+          "status": "none",
+          "page": 3,
+          "items": []
+        },
+        {
+          "team": "Red Bull Racing",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Sidepod Inlet",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "흡입구 변경",
+              "page": 4
+            },
+            {
+              "component": "Coke/Engine Cover",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "흡입구 변경",
+              "page": 4
+            },
+            {
+              "component": "Floor",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 4
+            },
+            {
+              "component": "Rear Corner",
+              "purpose": "냉각",
+              "change": "서킷 특화 사양",
+              "detail": "흡입구 변경",
+              "page": 4
+            }
+          ]
+        },
+        {
+          "team": "Ferrari",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Corner",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            },
+            {
+              "component": "Floor Body",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "team": "Williams",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Suspension",
+              "purpose": "구조 개선",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 8
+            }
+          ]
+        },
+        {
+          "team": "Racing Bulls",
+          "status": "none",
+          "page": 10,
+          "items": []
+        },
+        {
+          "team": "Aston Martin",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "시위 변경",
+              "page": 11
+            },
+            {
+              "component": "Front Wing Endplate",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 11
+            },
+            {
+              "component": "Floor Body",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 11
+            }
+          ]
+        },
+        {
+          "team": "Haas F1 Team",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 13
+            }
+          ]
+        },
+        {
+          "team": "Audi",
+          "status": "none",
+          "page": 15,
+          "items": []
+        },
+        {
+          "team": "Alpine",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 16
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 16
+            },
+            {
+              "component": "Rear Wing Endplate",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "엔드플레이트 변경",
+              "page": 16
+            }
+          ]
+        },
+        {
+          "team": "Cadillac",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Diffuser Fence",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "펜스 변경 · 가장자리 변경",
+              "page": 18
+            },
+            {
+              "component": "Diffuser",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 18
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": 1284,
+      "name": "Miami Grand Prix",
+      "page": "https://www.fia.com/documents/event/Miami%20Grand%20Prix",
+      "source": "https://www.fia.com/system/files/decision-document/2026_miami_grand_prix_-_car_presentation_submissions.pdf",
+      "status": "reviewed",
+      "teams": [
+        {
+          "team": "McLaren",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Coke/Engine Cover",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Sidepod Inlet",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "흡입구 변경",
+              "page": 2
+            },
+            {
+              "component": "Cooling Louvres",
+              "purpose": "냉각",
+              "change": "서킷 특화 사양",
+              "detail": "루버 변경",
+              "page": 2
+            },
+            {
+              "component": "Floor Body",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Rear Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 2
+            }
+          ]
+        },
+        {
+          "team": "Mercedes",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Tailpipe",
+              "purpose": "항력 감소",
+              "change": "신규 설계",
+              "detail": "슬롯 변경",
+              "page": 4
+            },
+            {
+              "component": "Front Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "시위 변경",
+              "page": 4
+            }
+          ]
+        },
+        {
+          "team": "Red Bull Racing",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "엔드플레이트 변경",
+              "page": 6
+            },
+            {
+              "component": "Front Corner",
+              "purpose": "신뢰성",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            },
+            {
+              "component": "Sidepod Inlet",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "흡입구 변경",
+              "page": 6
+            },
+            {
+              "component": "Coke/Engine Cover",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "흡입구 변경",
+              "page": 6
+            },
+            {
+              "component": "Floor",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            },
+            {
+              "component": "Rear Corner",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "team": "Ferrari",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing Endplate",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 9
+            },
+            {
+              "component": "Front Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 9
+            },
+            {
+              "component": "Front Suspension",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 9
+            },
+            {
+              "component": "Floor Body",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 9
+            },
+            {
+              "component": "Floor Edge",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 9
+            },
+            {
+              "component": "Diffuser",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "펜스 변경 · 가장자리 변경",
+              "page": 9
+            },
+            {
+              "component": "Rear Suspension",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 9
+            },
+            {
+              "component": "Beam Wing",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 10
+            },
+            {
+              "component": "Rear tail",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 10
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "항력 감소",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 10
+            },
+            {
+              "component": "Rear Wing Endplate",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "엔드플레이트 변경",
+              "page": 10
+            }
+          ]
+        },
+        {
+          "team": "Williams",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Floor",
+              "purpose": "성능 개선",
+              "change": "신규 설계",
+              "detail": "가장자리 변경",
+              "page": 12
+            },
+            {
+              "component": "Sidepod",
+              "purpose": "기류 정돈 · 냉각",
+              "change": "신규 설계",
+              "detail": "흡입구 변경",
+              "page": 12
+            },
+            {
+              "component": "Bodywork – engine cover / coke / cooling exits",
+              "purpose": "기류 정돈 · 냉각",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 12
+            },
+            {
+              "component": "Mirror assembly",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 12
+            },
+            {
+              "component": "Tailpipe bracket",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 12
+            },
+            {
+              "component": "RIS fairings",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "가장자리 변경",
+              "page": 12
+            },
+            {
+              "component": "Rear brace wing",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "가장자리 변경",
+              "page": 12
+            }
+          ]
+        },
+        {
+          "team": "Racing Bulls",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 14
+            },
+            {
+              "component": "Rear Suspension",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 14
+            },
+            {
+              "component": "Floor Edge",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "슬롯 변경 · 가장자리 변경",
+              "page": 14
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 14
+            },
+            {
+              "component": "Rear Wing Endplate",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "캠버 변경 · 엔드플레이트 변경",
+              "page": 14
+            },
+            {
+              "component": "Front Wing",
+              "purpose": "밸런스 조정",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 14
+            }
+          ]
+        },
+        {
+          "team": "Aston Martin",
+          "status": "none",
+          "page": 16,
+          "items": []
+        },
+        {
+          "team": "Haas F1 Team",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Diffuser Diffuser",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 17
+            }
+          ]
+        },
+        {
+          "team": "Audi",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Suspension",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 19
+            },
+            {
+              "component": "Floor Edge and Diffuser",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "가장자리 변경",
+              "page": 19
+            }
+          ]
+        },
+        {
+          "team": "Alpine",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 21
+            },
+            {
+              "component": "Nose camera",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 21
+            },
+            {
+              "component": "Rear suspension",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 21
+            },
+            {
+              "component": "Rear impact structure",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 21
+            },
+            {
+              "component": "Rear wing",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 21
+            },
+            {
+              "component": "Rear Wing Endplate",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "엔드플레이트 변경",
+              "page": 21
+            }
+          ]
+        },
+        {
+          "team": "Cadillac",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing Endplate",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 23
+            },
+            {
+              "component": "Front Wing Flap",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 23
+            },
+            {
+              "component": "Mirror Stay",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 23
+            },
+            {
+              "component": "Forward Floorboard",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 23
+            },
+            {
+              "component": "Floor Body",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 23
+            },
+            {
+              "component": "Diffuser",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "펜스 변경 · 가장자리 변경",
+              "page": 23
+            },
+            {
+              "component": "Rear Suspension",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 23
+            },
+            {
+              "component": "Rear Corner",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 24
+            },
+            {
+              "component": "Exhaust Tailpipe Bracket",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 24
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": 1285,
+      "name": "Canadian Grand Prix",
+      "page": "https://www.fia.com/documents/event/Canadian%20Grand%20Prix",
+      "source": "https://www.fia.com/system/files/decision-document/2026_canadian_grand_prix_-_car_presentation_submissions.pdf",
+      "status": "reviewed",
+      "teams": [
+        {
+          "team": "McLaren",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Coke/Engine Cover",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Cooling Louvres",
+              "purpose": "냉각",
+              "change": "서킷 특화 사양",
+              "detail": "루버 변경",
+              "page": 2
+            },
+            {
+              "component": "Halo",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Rear Wing Endplate",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "엔드플레이트 변경",
+              "page": 2
+            },
+            {
+              "component": "Rear Suspension",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Floor Edge",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 2
+            }
+          ]
+        },
+        {
+          "team": "Mercedes",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "높이 변경",
+              "page": 4
+            },
+            {
+              "component": "Front Wing Endplate",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "캠버 변경 · 엔드플레이트 변경",
+              "page": 4
+            },
+            {
+              "component": "Front Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "캠버 변경",
+              "page": 4
+            },
+            {
+              "component": "Front Corner",
+              "purpose": "냉각",
+              "change": "서킷 특화 사양",
+              "detail": "흡입구 변경",
+              "page": 4
+            },
+            {
+              "component": "Floor Board",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 4
+            },
+            {
+              "component": "Floor Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "슬롯 변경",
+              "page": 4
+            },
+            {
+              "component": "Floor Body",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 4
+            },
+            {
+              "component": "Rear Corner",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "폭 변경",
+              "page": 4
+            }
+          ]
+        },
+        {
+          "team": "Red Bull Racing",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "밸런스 조정",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            },
+            {
+              "component": "Front Corner",
+              "purpose": "신뢰성",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            },
+            {
+              "component": "Floor",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 6
+            },
+            {
+              "component": "Engine Cover",
+              "purpose": "신뢰성",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "team": "Ferrari",
+          "status": "none",
+          "page": 8,
+          "items": []
+        },
+        {
+          "team": "Williams",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Corner",
+              "purpose": "냉각",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 9
+            },
+            {
+              "component": "Front Suspension",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "폭 변경 · 시위 변경 · 설치각 변경",
+              "page": 9
+            },
+            {
+              "component": "Exhaust Tailpipe",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 9
+            }
+          ]
+        },
+        {
+          "team": "Racing Bulls",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Floor Body",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 11
+            },
+            {
+              "component": "Rear Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 11
+            },
+            {
+              "component": "Beam Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "설치각 변경",
+              "page": 11
+            },
+            {
+              "component": "Exhaust Tailpipe Bracket",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 11
+            }
+          ]
+        },
+        {
+          "team": "Aston Martin",
+          "status": "none",
+          "page": 13,
+          "items": []
+        },
+        {
+          "team": "Haas F1 Team",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Sidepod Inlet Sidepod Inlet",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "흡입구 변경",
+              "page": 14
+            },
+            {
+              "component": "Coke/Engine Cover",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 14
+            },
+            {
+              "component": "Floor Body",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "가장자리 변경",
+              "page": 14
+            },
+            {
+              "component": "Rear Suspension",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 14
+            },
+            {
+              "component": "Rear Corner",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 14
+            }
+          ]
+        },
+        {
+          "team": "Audi",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Corner",
+              "purpose": "냉각",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 16
+            },
+            {
+              "component": "Floor Diffuser Winglet",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 16
+            },
+            {
+              "component": "Cooling Louvres",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "루버 변경",
+              "page": 16
+            },
+            {
+              "component": "Rear Corner",
+              "purpose": "냉각",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 16
+            }
+          ]
+        },
+        {
+          "team": "Alpine",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Floor body",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 18
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 18
+            }
+          ]
+        },
+        {
+          "team": "Cadillac",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Corner",
+              "purpose": "냉각",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 20
+            },
+            {
+              "component": "Diffuser",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 20
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": 1286,
+      "name": "Monaco Grand Prix",
+      "page": "https://www.fia.com/documents/event/Monaco%20Grand%20Prix",
+      "source": "https://www.fia.com/system/files/decision-document/2026_monaco_grand_prix_-_car_presentation_submissions.pdf",
+      "status": "reviewed",
+      "teams": [
+        {
+          "team": "McLaren",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Coke/Engine Cover",
+              "purpose": "냉각",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Front Suspension",
+              "purpose": "신뢰성",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Beam Wing",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "항력 범위 조정",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Rear Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Diffuser",
+              "purpose": "신뢰성",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            }
+          ]
+        },
+        {
+          "team": "Mercedes",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 4
+            }
+          ]
+        },
+        {
+          "team": "Red Bull Racing",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Corner",
+              "purpose": "신뢰성",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            },
+            {
+              "component": "Front corner",
+              "purpose": "신뢰성",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            },
+            {
+              "component": "Engine Cover",
+              "purpose": "신뢰성",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            },
+            {
+              "component": "Rear wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "team": "Ferrari",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Suspension",
+              "purpose": "성능 개선",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 8
+            },
+            {
+              "component": "Floor Body",
+              "purpose": "항력 범위 조정",
+              "change": "서킷 특화 사양",
+              "detail": "가장자리 변경",
+              "page": 8
+            },
+            {
+              "component": "Diffuser",
+              "purpose": "항력 범위 조정",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 8
+            }
+          ]
+        },
+        {
+          "team": "Williams",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Suspension",
+              "purpose": "기계적 성능",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 10
+            },
+            {
+              "component": "Exhaust Tailpipe",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 10
+            }
+          ]
+        },
+        {
+          "team": "Racing Bulls",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Suspension",
+              "purpose": "기계적 성능",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 12
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 12
+            }
+          ]
+        },
+        {
+          "team": "Aston Martin",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Suspension",
+              "purpose": "기계적 성능",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 14
+            },
+            {
+              "component": "Cooling Louvres",
+              "purpose": "냉각",
+              "change": "서킷 특화 사양",
+              "detail": "루버 변경",
+              "page": 14
+            },
+            {
+              "component": "Exhaust Tailpipe Bracket",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 14
+            }
+          ]
+        },
+        {
+          "team": "Haas F1 Team",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Suspension Front Suspension",
+              "purpose": "기계적 성능",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 16
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 16
+            },
+            {
+              "component": "Rear Impact Structure",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 16
+            }
+          ]
+        },
+        {
+          "team": "Audi",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "다운포스",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 18
+            },
+            {
+              "component": "Mirror",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 18
+            },
+            {
+              "component": "Engine Cover",
+              "purpose": "냉각",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 18
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 18
+            }
+          ]
+        },
+        {
+          "team": "Alpine",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 20
+            }
+          ]
+        },
+        {
+          "team": "Cadillac",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 22
+            },
+            {
+              "component": "Exhaust Tailpipe",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 22
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": 1287,
+      "name": "Barcelona Grand Prix",
+      "page": "https://www.fia.com/documents/event/Barcelona-Catalunya%20Grand%20Prix",
+      "source": "https://www.fia.com/system/files/decision-document/2026_barcelona-catalunya_grand_prix_-_car_presentation_submissions.pdf",
+      "status": "reviewed",
+      "teams": [
+        {
+          "team": "McLaren",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "엔드플레이트 변경",
+              "page": 2
+            }
+          ]
+        },
+        {
+          "team": "Mercedes",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 4
+            }
+          ]
+        },
+        {
+          "team": "Red Bull Racing",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "기류 정돈 · 다운포스",
+              "change": "형상 수정",
+              "detail": "엔드플레이트 변경",
+              "page": 6
+            },
+            {
+              "component": "Front wing",
+              "purpose": "밸런스 조정",
+              "change": "형상 수정",
+              "detail": "캠버 변경",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "team": "Ferrari",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "엔드플레이트 변경 · 폭 변경",
+              "page": 8
+            },
+            {
+              "component": "Front Wing Endplate",
+              "purpose": "성능 개선",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 8
+            },
+            {
+              "component": "Nose",
+              "purpose": "성능 개선",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 8
+            },
+            {
+              "component": "Floor Body",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 8
+            },
+            {
+              "component": "Floor Board",
+              "purpose": "성능 개선",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 8
+            },
+            {
+              "component": "Floor Edge",
+              "purpose": "성능 개선",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 8
+            },
+            {
+              "component": "Diffuser",
+              "purpose": "성능 개선",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 8
+            },
+            {
+              "component": "Sidepod/Coke",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 8
+            }
+          ]
+        },
+        {
+          "team": "Williams",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 10
+            }
+          ]
+        },
+        {
+          "team": "Racing Bulls",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "밸런스 조정",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 12
+            },
+            {
+              "component": "Diffuser / Rear Crash Structure",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 12
+            }
+          ]
+        },
+        {
+          "team": "Aston Martin",
+          "status": "none",
+          "page": 14,
+          "items": []
+        },
+        {
+          "team": "Haas F1 Team",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Impact Structure Rear Impact Structure",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 15
+            }
+          ]
+        },
+        {
+          "team": "Audi",
+          "status": "none",
+          "page": 17,
+          "items": []
+        },
+        {
+          "team": "Alpine",
+          "status": "none",
+          "page": 18,
+          "items": []
+        },
+        {
+          "team": "Cadillac",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Cooling Louvres",
+              "purpose": "냉각",
+              "change": "형상 수정",
+              "detail": "루버 변경",
+              "page": 19
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "항력 감소",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 19
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": 1288,
+      "name": "Austrian Grand Prix",
+      "page": "https://www.fia.com/documents/event/Austrian%20Grand%20Prix",
+      "source": "https://www.fia.com/system/files/decision-document/2026_austrian_grand_prix_-_car_presentation_submissions.pdf",
+      "status": "reviewed",
+      "teams": [
+        {
+          "team": "McLaren",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "흡입구 변경",
+              "page": 2
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "항력 감소",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            }
+          ]
+        },
+        {
+          "team": "Mercedes",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Suspension",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 4
+            },
+            {
+              "component": "Coke/Engine Cover",
+              "purpose": "냉각",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 4
+            }
+          ]
+        },
+        {
+          "team": "Red Bull Racing",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Sidepod Inlet",
+              "purpose": "신뢰성",
+              "change": "형상 수정",
+              "detail": "흡입구 변경",
+              "page": 6
+            },
+            {
+              "component": "Engine Cover",
+              "purpose": "신뢰성",
+              "change": "신규 설계",
+              "detail": "흡입구 변경",
+              "page": 6
+            },
+            {
+              "component": "Floor Floor Board",
+              "purpose": "기류 정돈 · 다운포스",
+              "change": "형상 수정",
+              "detail": "루버 변경",
+              "page": 6
+            },
+            {
+              "component": "Rear Suspension",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            },
+            {
+              "component": "Rear Corner",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "team": "Ferrari",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing Endplate",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "엔드플레이트 변경",
+              "page": 9
+            },
+            {
+              "component": "RV Tail",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 9
+            },
+            {
+              "component": "Floor Board",
+              "purpose": "성능 개선",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 9
+            },
+            {
+              "component": "Mirror stay",
+              "purpose": "성능 개선",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 9
+            }
+          ]
+        },
+        {
+          "team": "Williams",
+          "status": "none",
+          "page": 11,
+          "items": []
+        },
+        {
+          "team": "Racing Bulls",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Exhaust Tailpipe",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 12
+            },
+            {
+              "component": "Diffuser",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 12
+            }
+          ]
+        },
+        {
+          "team": "Aston Martin",
+          "status": "none",
+          "page": 14,
+          "items": []
+        },
+        {
+          "team": "Haas F1 Team",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Corner Front Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 15
+            },
+            {
+              "component": "Cooling Louvres",
+              "purpose": "냉각",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 15
+            }
+          ]
+        },
+        {
+          "team": "Audi",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing Endplate",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "엔드플레이트 변경",
+              "page": 17
+            },
+            {
+              "component": "Front Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 17
+            },
+            {
+              "component": "Floor",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 17
+            },
+            {
+              "component": "Rear Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 17
+            },
+            {
+              "component": "Rear Suspension",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 17
+            },
+            {
+              "component": "Beam Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 17
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 17
+            }
+          ]
+        },
+        {
+          "team": "Alpine",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 19
+            },
+            {
+              "component": "Front Wing Endplate",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 19
+            },
+            {
+              "component": "Nose",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 19
+            },
+            {
+              "component": "Front Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 19
+            },
+            {
+              "component": "Diffuser",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 19
+            }
+          ]
+        },
+        {
+          "team": "Cadillac",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Sidepod Inlet",
+              "purpose": "냉각",
+              "change": "형상 수정",
+              "detail": "흡입구 변경",
+              "page": 21
+            },
+            {
+              "component": "Engine Cover",
+              "purpose": "냉각",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 21
+            },
+            {
+              "component": "Sidepod / Coke",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 21
+            },
+            {
+              "component": "Cooling Louvres",
+              "purpose": "냉각",
+              "change": "형상 수정",
+              "detail": "루버 변경",
+              "page": 21
+            },
+            {
+              "component": "Mirror Stay",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "설치각 변경",
+              "page": 21
+            },
+            {
+              "component": "Roll Hoop Leg Fairings",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 21
+            },
+            {
+              "component": "Floor Bib",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 22
+            },
+            {
+              "component": "Floor Leading Edge",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 22
+            },
+            {
+              "component": "Diffuser",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 22
+            },
+            {
+              "component": "Beam Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 22
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": 1289,
+      "name": "British Grand Prix",
+      "page": "https://www.fia.com/documents/event/British%20Grand%20Prix",
+      "source": "https://www.fia.com/system/files/decision-document/2026_british_grand_prix_-_car_presentation_submissions.pdf",
+      "status": "reviewed",
+      "teams": [
+        {
+          "team": "McLaren",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Corner",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Floor Furniture",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            }
+          ]
+        },
+        {
+          "team": "Mercedes",
+          "status": "none",
+          "page": 4,
+          "items": []
+        },
+        {
+          "team": "Red Bull Racing",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Corner",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 5
+            }
+          ]
+        },
+        {
+          "team": "Ferrari",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Corner",
+              "purpose": "다운포스 · 냉각",
+              "change": "형상 수정",
+              "detail": "흡입구 변경 · 배출구 변경",
+              "page": 7
+            }
+          ]
+        },
+        {
+          "team": "Williams",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "엔드플레이트 변경",
+              "page": 9
+            }
+          ]
+        },
+        {
+          "team": "Racing Bulls",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Floor Edge & Diffuser",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 11
+            },
+            {
+              "component": "Rear Corner",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 11
+            }
+          ]
+        },
+        {
+          "team": "Aston Martin",
+          "status": "none",
+          "page": 13,
+          "items": []
+        },
+        {
+          "team": "Haas F1 Team",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing Rear Wing",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 14
+            },
+            {
+              "component": "Rear Wing Endplate",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "엔드플레이트 변경",
+              "page": 14
+            }
+          ]
+        },
+        {
+          "team": "Audi",
+          "status": "none",
+          "page": 16,
+          "items": []
+        },
+        {
+          "team": "Alpine",
+          "status": "none",
+          "page": 17,
+          "items": []
+        },
+        {
+          "team": "Cadillac",
+          "status": "none",
+          "page": 18,
+          "items": []
+        }
+      ]
+    },
+    {
+      "key": 1290,
+      "name": "Belgian Grand Prix",
+      "page": "https://www.fia.com/documents/event/Belgian%20Grand%20Prix",
+      "source": "https://www.fia.com/system/files/decision-document/2026_belgian_grand_prix_-_car_presentation_submissions.pdf",
+      "status": "reviewed",
+      "teams": [
+        {
+          "team": "McLaren",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "엔드플레이트 변경",
+              "page": 2
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "항력 감소",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 2
+            }
+          ]
+        },
+        {
+          "team": "Mercedes",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing",
+              "purpose": "항력 범위 조정",
+              "change": "서킷 특화 사양",
+              "detail": "캠버 변경",
+              "page": 4
+            },
+            {
+              "component": "Rear Corner",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "폭 변경",
+              "page": 4
+            },
+            {
+              "component": "Front Wing Endplate",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "캠버 변경 · 엔드플레이트 변경 · 가장자리 변경",
+              "page": 4
+            }
+          ]
+        },
+        {
+          "team": "Red Bull Racing",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "team": "Ferrari",
+          "status": "none",
+          "page": 8,
+          "items": []
+        },
+        {
+          "team": "Williams",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Corner",
+              "purpose": "항력 범위 조정",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 9
+            },
+            {
+              "component": "Floor Body",
+              "purpose": "항력 범위 조정",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 9
+            },
+            {
+              "component": "Floor Body",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 9
+            }
+          ]
+        },
+        {
+          "team": "Racing Bulls",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Coke/Engine Cover",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 11
+            },
+            {
+              "component": "Roll Hoop",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "흡입구 변경",
+              "page": 11
+            },
+            {
+              "component": "Front Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 11
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 11
+            }
+          ]
+        },
+        {
+          "team": "Aston Martin",
+          "status": "none",
+          "page": 13,
+          "items": []
+        },
+        {
+          "team": "Haas F1 Team",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing Front Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 14
+            },
+            {
+              "component": "Front Wing Endplate",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "엔드플레이트 변경",
+              "page": 14
+            },
+            {
+              "component": "Front Corner",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 14
+            },
+            {
+              "component": "Beam Wing",
+              "purpose": "항력 감소",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 14
+            }
+          ]
+        },
+        {
+          "team": "Audi",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing",
+              "purpose": "항력 범위 조정",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 16
+            },
+            {
+              "component": "Diffuser",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 16
+            }
+          ]
+        },
+        {
+          "team": "Alpine",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Halo",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 18
+            }
+          ]
+        },
+        {
+          "team": "Cadillac",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing Endplate",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "엔드플레이트 변경",
+              "page": 20
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": 1291,
+      "name": "Hungarian Grand Prix",
+      "page": "https://www.fia.com/documents/event/Hungarian%20Grand%20Prix",
+      "source": "https://www.fia.com/system/files/decision-document/2026_hungarian_grand_prix_-_car_presentation_submissions.pdf",
+      "status": "reviewed",
+      "teams": [
+        {
+          "team": "McLaren",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "엔드플레이트 변경",
+              "page": 2
+            },
+            {
+              "component": "Floor Body",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Front Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Front Corner",
+              "purpose": "냉각",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Rear Corner",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            }
+          ]
+        },
+        {
+          "team": "Mercedes",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing",
+              "purpose": "항력 범위 조정",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 4
+            },
+            {
+              "component": "Coke/Engine Cover",
+              "purpose": "냉각",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 4
+            },
+            {
+              "component": "Tail",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 4
+            }
+          ]
+        },
+        {
+          "team": "Red Bull Racing",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            },
+            {
+              "component": "Floor",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "team": "Ferrari",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "엔드플레이트 변경 · 가장자리 변경",
+              "page": 8
+            },
+            {
+              "component": "Rear Wing Endplate",
+              "purpose": "성능 개선",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 8
+            }
+          ]
+        },
+        {
+          "team": "Williams",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing",
+              "purpose": "항력 범위 조정",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 10
+            },
+            {
+              "component": "Floor Body",
+              "purpose": "항력 범위 조정",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 10
+            }
+          ]
+        },
+        {
+          "team": "Racing Bulls",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Roll Hoop",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 12
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 12
+            },
+            {
+              "component": "Cooling Louvres",
+              "purpose": "냉각",
+              "change": "서킷 특화 사양",
+              "detail": "루버 변경",
+              "page": 12
+            }
+          ]
+        },
+        {
+          "team": "Aston Martin",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "시위 변경",
+              "page": 14
+            },
+            {
+              "component": "Front Wing Endplate",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 14
+            },
+            {
+              "component": "Nose",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 14
+            },
+            {
+              "component": "Front Corner",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 14
+            },
+            {
+              "component": "Floor Body",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 14
+            },
+            {
+              "component": "Floor Fences",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 14
+            },
+            {
+              "component": "Floor Edge",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 14
+            },
+            {
+              "component": "Diffuser",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "펜스 변경",
+              "page": 14
+            }
+          ]
+        },
+        {
+          "team": "Haas F1 Team",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 17
+            }
+          ]
+        },
+        {
+          "team": "Audi",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "엔드플레이트 변경",
+              "page": 19
+            }
+          ]
+        },
+        {
+          "team": "Alpine",
+          "status": "none",
+          "page": 21,
+          "items": []
+        },
+        {
+          "team": "Cadillac",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Corner",
+              "purpose": "냉각",
+              "change": "형상 수정",
+              "detail": "흡입구 변경",
+              "page": 22
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": 1292,
+      "name": "Dutch Grand Prix",
+      "page": "https://www.fia.com/documents/event/Dutch%20Grand%20Prix",
+      "source": "https://www.fia.com/system/files/decision-document/2026_dutch_grand_prix_-_car_presentation_submissions.pdf",
+      "status": "reviewed",
+      "teams": [
+        {
+          "team": "McLaren",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Coke/Engine Cover",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Rear Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            }
+          ]
+        },
+        {
+          "team": "Mercedes",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "캠버 변경 · 흡입구 변경",
+              "page": 4
+            }
+          ]
+        },
+        {
+          "team": "Red Bull Racing",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Corner",
+              "purpose": "신뢰성",
+              "change": "형상 수정",
+              "detail": "시위 변경",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "team": "Ferrari",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Floor Body",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 8
+            },
+            {
+              "component": "Floor Board",
+              "purpose": "성능 개선",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 8
+            },
+            {
+              "component": "Floor Edge",
+              "purpose": "성능 개선",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 8
+            },
+            {
+              "component": "Diffuser",
+              "purpose": "성능 개선",
+              "change": "형상 수정",
+              "detail": "펜스 변경",
+              "page": 8
+            },
+            {
+              "component": "Beam Wing",
+              "purpose": "성능 개선",
+              "change": "형상 수정",
+              "detail": "폭 변경",
+              "page": 8
+            }
+          ]
+        },
+        {
+          "team": "Williams",
+          "status": "none",
+          "page": 10,
+          "items": []
+        },
+        {
+          "team": "Racing Bulls",
+          "status": "none",
+          "page": 11,
+          "items": []
+        },
+        {
+          "team": "Aston Martin",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "시위 변경",
+              "page": 12
+            },
+            {
+              "component": "Front Wing Endplate",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 12
+            },
+            {
+              "component": "Front Wing",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 12
+            },
+            {
+              "component": "Floor Fences",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "펜스 변경",
+              "page": 12
+            },
+            {
+              "component": "Diffuser",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 12
+            }
+          ]
+        },
+        {
+          "team": "Haas F1 Team",
+          "status": "none",
+          "page": 14,
+          "items": []
+        },
+        {
+          "team": "Audi",
+          "status": "none",
+          "page": 15,
+          "items": []
+        },
+        {
+          "team": "Alpine",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Floor Body",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 16
+            },
+            {
+              "component": "Floor Board",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 16
+            },
+            {
+              "component": "Floor Edge",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 16
+            },
+            {
+              "component": "Diffuser",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 16
+            },
+            {
+              "component": "Sidepod/Coke",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 16
+            },
+            {
+              "component": "Rear Corner",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 16
+            },
+            {
+              "component": "Rear impact structure",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 17
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 17
+            }
+          ]
+        },
+        {
+          "team": "Cadillac",
+          "status": "none",
+          "page": 19,
+          "items": []
+        }
+      ]
+    },
+    {
+      "key": 1293,
+      "name": "Italian Grand Prix",
+      "page": "https://www.fia.com/documents/event/Italian%20Grand%20Prix",
+      "source": "https://www.fia.com/system/files/decision-document/2026_italian_grand_prix_-_car_presentation_submissions.pdf",
+      "status": "reviewed",
+      "teams": [
+        {
+          "team": "McLaren",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing",
+              "purpose": "항력 감소",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Floor Furniture",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            }
+          ]
+        },
+        {
+          "team": "Mercedes",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing",
+              "purpose": "항력 범위 조정",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 4
+            },
+            {
+              "component": "Front Bodywork",
+              "purpose": "항력 범위 조정",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 4
+            }
+          ]
+        },
+        {
+          "team": "Red Bull Racing",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Corner",
+              "purpose": "신뢰성",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            },
+            {
+              "component": "Floor Body",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 6
+            },
+            {
+              "component": "Exhaust Tailpipe",
+              "purpose": "신뢰성",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            },
+            {
+              "component": "Front Wing",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "엔드플레이트 변경",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "team": "Ferrari",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Floor Board",
+              "purpose": "항력 범위 조정",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 8
+            },
+            {
+              "component": "Mirror Stay",
+              "purpose": "항력 범위 조정",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 8
+            },
+            {
+              "component": "Rear Corner",
+              "purpose": "항력 범위 조정",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 8
+            },
+            {
+              "component": "RV Tail",
+              "purpose": "항력 범위 조정",
+              "change": "서킷 특화 사양",
+              "detail": "슬롯 변경",
+              "page": 8
+            }
+          ]
+        },
+        {
+          "team": "Williams",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Halo",
+              "purpose": "항력 범위 조정",
+              "change": "서킷 특화 사양",
+              "detail": "펜스 변경",
+              "page": 10
+            },
+            {
+              "component": "Front Wing",
+              "purpose": "밸런스 조정",
+              "change": "서킷 특화 사양",
+              "detail": "시위 변경",
+              "page": 10
+            },
+            {
+              "component": "Floor Body",
+              "purpose": "항력 범위 조정",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 10
+            }
+          ]
+        },
+        {
+          "team": "Racing Bulls",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing",
+              "purpose": "항력 범위 조정",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 12
+            },
+            {
+              "component": "Exhaust Tailpipe",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 12
+            }
+          ]
+        },
+        {
+          "team": "Aston Martin",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Suspension",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 14
+            },
+            {
+              "component": "Floor Edge",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 14
+            }
+          ]
+        },
+        {
+          "team": "Haas F1 Team",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Floor",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 16
+            },
+            {
+              "component": "Bodywork",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 16
+            },
+            {
+              "component": "Rear Corner",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 16
+            }
+          ]
+        },
+        {
+          "team": "Audi",
+          "status": "none",
+          "page": 18,
+          "items": []
+        },
+        {
+          "team": "Alpine",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing Endplate",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 19
+            },
+            {
+              "component": "Rear wing",
+              "purpose": "항력 감소",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 19
+            }
+          ]
+        },
+        {
+          "team": "Cadillac",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Forward Floor Board Stay",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 21
+            },
+            {
+              "component": "Diffuser Vane",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 21
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": 1294,
+      "name": "Spanish Grand Prix",
+      "page": "https://www.fia.com/documents/event/Spanish%20Grand%20Prix",
+      "source": "https://www.fia.com/system/files/decision-document/2026_spanish_grand_prix_-_car_presentation_submissions.pdf",
+      "status": "reviewed",
+      "teams": [
+        {
+          "team": "McLaren",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            }
+          ]
+        },
+        {
+          "team": "Mercedes",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing",
+              "purpose": "항력 범위 조정",
+              "change": "서킷 특화 사양",
+              "detail": "폭 변경",
+              "page": 4
+            },
+            {
+              "component": "Exhaust Tailpipe",
+              "purpose": "항력 범위 조정",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 4
+            },
+            {
+              "component": "Front Drum",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 4
+            }
+          ]
+        },
+        {
+          "team": "Red Bull Racing",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Corner",
+              "purpose": "신뢰성",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            },
+            {
+              "component": "Floor Bib",
+              "purpose": "신뢰성",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "team": "Ferrari",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Suspension",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 8
+            }
+          ]
+        },
+        {
+          "team": "Williams",
+          "status": "none",
+          "page": 10,
+          "items": []
+        },
+        {
+          "team": "Racing Bulls",
+          "status": "none",
+          "page": 11,
+          "items": []
+        },
+        {
+          "team": "Aston Martin",
+          "status": "none",
+          "page": 12,
+          "items": []
+        },
+        {
+          "team": "Haas F1 Team",
+          "status": "none",
+          "page": 13,
+          "items": []
+        },
+        {
+          "team": "Audi",
+          "status": "none",
+          "page": 14,
+          "items": []
+        },
+        {
+          "team": "Alpine",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Floor board",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 15
+            }
+          ]
+        },
+        {
+          "team": "Cadillac",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Wing Flap",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 17
+            },
+            {
+              "component": "Diffuser Vane",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": 1295,
+      "name": "Azerbaijan Grand Prix",
+      "page": "https://www.fia.com/documents/event/Azerbaijan%20Grand%20Prix",
+      "source": "https://www.fia.com/system/files/decision-document/2026_azerbaijan_grand_prix_-_car_presentation_submissions.pdf",
+      "status": "reviewed",
+      "teams": [
+        {
+          "team": "McLaren",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Sidepod Inlet",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "흡입구 변경",
+              "page": 2
+            },
+            {
+              "component": "Coke/Engine Cover",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Coke/Engine Cover",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Cooling Louvres",
+              "purpose": "냉각",
+              "change": "서킷 특화 사양",
+              "detail": "루버 변경",
+              "page": 2
+            },
+            {
+              "component": "Floor Edge",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 2
+            },
+            {
+              "component": "Diffuser",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Rear Suspension",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            }
+          ]
+        },
+        {
+          "team": "Mercedes",
+          "status": "none",
+          "page": 5,
+          "items": []
+        },
+        {
+          "team": "Red Bull Racing",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Floor Body & Diffuser",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            },
+            {
+              "component": "Sidepod",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            },
+            {
+              "component": "Cooling louvres",
+              "purpose": "신뢰성",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            },
+            {
+              "component": "Mirrors",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            },
+            {
+              "component": "Halo",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "team": "Ferrari",
+          "status": "none",
+          "page": 8,
+          "items": []
+        },
+        {
+          "team": "Williams",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Floor",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "가장자리 변경",
+              "page": 9
+            },
+            {
+              "component": "Tail",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 9
+            },
+            {
+              "component": "Front Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 9
+            },
+            {
+              "component": "Rear Suspension",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 9
+            },
+            {
+              "component": "Rear Corner",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "가장자리 변경",
+              "page": 9
+            }
+          ]
+        },
+        {
+          "team": "Racing Bulls",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 11
+            },
+            {
+              "component": "Front Corner",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 11
+            },
+            {
+              "component": "Front Suspension",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 11
+            }
+          ]
+        },
+        {
+          "team": "Aston Martin",
+          "status": "none",
+          "page": 13,
+          "items": []
+        },
+        {
+          "team": "Haas F1 Team",
+          "status": "none",
+          "page": 14,
+          "items": []
+        },
+        {
+          "team": "Audi",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 15
+            },
+            {
+              "component": "Front Wing Endplate",
+              "purpose": "성능 개선",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 15
+            },
+            {
+              "component": "Nose",
+              "purpose": "성능 개선",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 15
+            },
+            {
+              "component": "Front Suspension",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 15
+            },
+            {
+              "component": "Floor Body",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 15
+            },
+            {
+              "component": "Floor leading edge devices",
+              "purpose": "성능 개선",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 15
+            },
+            {
+              "component": "Diffuser",
+              "purpose": "성능 개선",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 15
+            }
+          ]
+        },
+        {
+          "team": "Alpine",
+          "status": "none",
+          "page": 18,
+          "items": []
+        },
+        {
+          "team": "Cadillac",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Corner",
+              "purpose": "냉각",
+              "change": "형상 수정",
+              "detail": "흡입구 변경",
+              "page": 19
+            },
+            {
+              "component": "Front Suspension",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 19
+            },
+            {
+              "component": "Diffuser",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 19
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": 1308,
+      "name": "Bahrain Grand Prix",
+      "page": "https://www.fia.com/documents/event/Bahrain%20Grand%20Prix",
+      "source": "https://www.fia.com/system/files/decision-document/2026_bahrain_grand_prix_in_malaysia_-_car_presentation_submissions.pdf",
+      "status": "reviewed",
+      "teams": [
+        {
+          "team": "McLaren",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Coke/Engine Cover",
+              "purpose": "냉각",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 2
+            }
+          ]
+        },
+        {
+          "team": "Mercedes",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Floor Board",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "슬롯 변경",
+              "page": 4
+            },
+            {
+              "component": "Floor Leading Edge",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 4
+            },
+            {
+              "component": "Floor Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "슬롯 변경",
+              "page": 4
+            },
+            {
+              "component": "Floor Body",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 4
+            },
+            {
+              "component": "Rear Suspension",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 4
+            },
+            {
+              "component": "Rear Corner",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "폭 변경",
+              "page": 4
+            },
+            {
+              "component": "Rear Bodywork",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 4
+            }
+          ]
+        },
+        {
+          "team": "Red Bull Racing",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Floor Board",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "team": "Ferrari",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Diffuser",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 8
+            }
+          ]
+        },
+        {
+          "team": "Williams",
+          "status": "none",
+          "page": 10,
+          "items": []
+        },
+        {
+          "team": "Racing Bulls",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "밸런스 조정",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 11
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 11
+            }
+          ]
+        },
+        {
+          "team": "Aston Martin",
+          "status": "none",
+          "page": 13,
+          "items": []
+        },
+        {
+          "team": "Haas F1 Team",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Impact Structure Rear Impact Structure",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 14
+            }
+          ]
+        },
+        {
+          "team": "Audi",
+          "status": "none",
+          "page": 16,
+          "items": []
+        },
+        {
+          "team": "Alpine",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Corner",
+              "purpose": "냉각",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 17
+            }
+          ]
+        },
+        {
+          "team": "Cadillac",
+          "status": "none",
+          "page": 19,
+          "items": []
+        }
+      ]
+    },
+    {
+      "key": 1296,
+      "name": "Singapore Grand Prix",
+      "page": "https://www.fia.com/documents/event/Singapore%20Grand%20Prix",
+      "source": "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_car_presentation_submissions.pdf",
+      "status": "reviewed",
+      "teams": [
+        {
+          "team": "McLaren",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Corner",
+              "purpose": "냉각",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 2
+            }
+          ]
+        },
+        {
+          "team": "Mercedes",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "시위 변경",
+              "page": 4
+            },
+            {
+              "component": "Front Wing Endplate",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "캠버 변경 · 엔드플레이트 변경",
+              "page": 4
+            }
+          ]
+        },
+        {
+          "team": "Red Bull Racing",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            },
+            {
+              "component": "Rear Wheel Bodywork",
+              "purpose": "신뢰성",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "team": "Ferrari",
+          "status": "none",
+          "page": 8,
+          "items": []
+        },
+        {
+          "team": "Williams",
+          "status": "none",
+          "page": 9,
+          "items": []
+        },
+        {
+          "team": "Racing Bulls",
+          "status": "none",
+          "page": 10,
+          "items": []
+        },
+        {
+          "team": "Aston Martin",
+          "status": "none",
+          "page": 11,
+          "items": []
+        },
+        {
+          "team": "Haas F1 Team",
+          "status": "none",
+          "page": 12,
+          "items": []
+        },
+        {
+          "team": "Audi",
+          "status": "none",
+          "page": 14,
+          "items": []
+        },
+        {
+          "team": "Alpine",
+          "status": "none",
+          "page": 13,
+          "items": []
+        },
+        {
+          "team": "Cadillac",
+          "status": "none",
+          "page": 15,
+          "items": []
+        }
+      ]
+    },
+    {
+      "key": 1297,
+      "name": "United States Grand Prix",
+      "page": "https://www.fia.com/documents/event/United%20States%20Grand%20Prix",
+      "source": "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_car_presentation_submissions.pdf",
+      "status": "reviewed",
+      "teams": [
+        {
+          "team": "McLaren",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Rear Corner",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Diffuser",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 2
+            }
+          ]
+        },
+        {
+          "team": "Mercedes",
+          "status": "none",
+          "page": 4,
+          "items": []
+        },
+        {
+          "team": "Red Bull Racing",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "엔드플레이트 변경",
+              "page": 5
+            },
+            {
+              "component": "Front Corner",
+              "purpose": "신뢰성",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 5
+            }
+          ]
+        },
+        {
+          "team": "Ferrari",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Floor Body",
+              "purpose": "기류 정돈 · 다운포스",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 7
+            },
+            {
+              "component": "Floor Board",
+              "purpose": "성능 개선",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 7
+            },
+            {
+              "component": "Sidepod Inlet / Coke",
+              "purpose": "성능 개선",
+              "change": "형상 수정",
+              "detail": "흡입구 변경",
+              "page": 7
+            },
+            {
+              "component": "Diffuser",
+              "purpose": "성능 개선",
+              "change": "형상 수정",
+              "detail": "펜스 변경 · 가장자리 변경",
+              "page": 7
+            }
+          ]
+        },
+        {
+          "team": "Williams",
+          "status": "none",
+          "page": 9,
+          "items": []
+        },
+        {
+          "team": "Racing Bulls",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "엔드플레이트 변경",
+              "page": 10
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 10
+            },
+            {
+              "component": "Floor Body",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "가장자리 변경",
+              "page": 10
+            },
+            {
+              "component": "Coke/Engine Cover",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 10
+            }
+          ]
+        },
+        {
+          "team": "Aston Martin",
+          "status": "none",
+          "page": 12,
+          "items": []
+        },
+        {
+          "team": "Haas F1 Team",
+          "status": "none",
+          "page": 13,
+          "items": []
+        },
+        {
+          "team": "Audi",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Corner",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 14
+            },
+            {
+              "component": "Front Floor",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 14
+            },
+            {
+              "component": "Mirror stay",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 14
+            }
+          ]
+        },
+        {
+          "team": "Alpine",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Floor Corner",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 16
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 16
+            }
+          ]
+        },
+        {
+          "team": "Cadillac",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Floor Fences",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "펜스 변경",
+              "page": 18
+            },
+            {
+              "component": "Cooling Louvres",
+              "purpose": "냉각",
+              "change": "형상 수정",
+              "detail": "루버 변경",
+              "page": 18
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": 1298,
+      "name": "Mexico City Grand Prix",
+      "page": "https://www.fia.com/documents/event/Mexico%20City%20Grand%20Prix",
+      "source": "https://www.fia.com/system/files/decision-document/2026_mexico_city_grand_prix_-_car_presentation_submissions.pdf",
+      "status": "reviewed",
+      "teams": [
+        {
+          "team": "McLaren",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Cooling Louvres",
+              "purpose": "냉각",
+              "change": "서킷 특화 사양",
+              "detail": "루버 변경",
+              "page": 2
+            }
+          ]
+        },
+        {
+          "team": "Mercedes",
+          "status": "none",
+          "page": 4,
+          "items": []
+        },
+        {
+          "team": "Red Bull Racing",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Engine Cover",
+              "purpose": "신뢰성",
+              "change": "형상 수정",
+              "detail": "루버 변경",
+              "page": 5
+            },
+            {
+              "component": "Sidepod",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 5
+            }
+          ]
+        },
+        {
+          "team": "Ferrari",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Engine Cover",
+              "purpose": "냉각",
+              "change": "서킷 특화 사양",
+              "detail": "루버 변경",
+              "page": 7
+            },
+            {
+              "component": "Cooling Louvres",
+              "purpose": "성능 개선",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 7
+            }
+          ]
+        },
+        {
+          "team": "Williams",
+          "status": "none",
+          "page": 9,
+          "items": []
+        },
+        {
+          "team": "Racing Bulls",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Coke/Engine Cover",
+              "purpose": "냉각",
+              "change": "서킷 특화 사양",
+              "detail": "",
+              "page": 10
+            },
+            {
+              "component": "Cooling Louvres",
+              "purpose": "냉각",
+              "change": "서킷 특화 사양",
+              "detail": "루버 변경",
+              "page": 10
+            }
+          ]
+        },
+        {
+          "team": "Aston Martin",
+          "status": "none",
+          "page": 12,
+          "items": []
+        },
+        {
+          "team": "Haas F1 Team",
+          "status": "none",
+          "page": 13,
+          "items": []
+        },
+        {
+          "team": "Audi",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Rear Corner",
+              "purpose": "다운포스",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 14
+            }
+          ]
+        },
+        {
+          "team": "Alpine",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Exhaust Tailpipe",
+              "purpose": "신뢰성",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 16
+            }
+          ]
+        },
+        {
+          "team": "Cadillac",
+          "status": "none",
+          "page": 18,
+          "items": []
+        }
+      ]
+    },
+    {
+      "key": 1299,
+      "name": "São Paulo Grand Prix",
+      "page": "https://www.fia.com/documents/event/S%C3%A3o%20Paulo%20Grand%20Prix",
+      "source": "https://www.fia.com/system/files/decision-document/2026_sao_paulo_grand_prix_-_car_presentation_submissions.pdf",
+      "status": "reviewed",
+      "teams": [
+        {
+          "team": "McLaren",
+          "status": "reported",
+          "items": [
+            {
+              "component": "Front Wing",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Rear Wing",
+              "purpose": "다운포스",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Beam Wing",
+              "purpose": "기류 정돈",
+              "change": "신규 설계",
+              "detail": "",
+              "page": 2
+            },
+            {
+              "component": "Floor Furniture",
+              "purpose": "기류 정돈",
+              "change": "형상 수정",
+              "detail": "",
+              "page": 2
+            }
+          ]
+        },
+        {
+          "team": "Mercedes",
+          "status": "none",
+          "page": 4,
+          "items": []
+        },
+        {
+          "team": "Red Bull Racing",
+          "status": "none",
+          "page": 5,
+          "items": []
+        },
+        {
+          "team": "Ferrari",
+          "status": "none",
+          "page": 6,
+          "items": []
+        },
+        {
+          "team": "Williams",
+          "status": "none",
+          "page": 7,
+          "items": []
+        },
+        {
+          "team": "Racing Bulls",
+          "status": "none",
+          "page": 8,
+          "items": []
+        },
+        {
+          "team": "Aston Martin",
+          "status": "none",
+          "page": 9,
+          "items": []
+        },
+        {
+          "team": "Haas F1 Team",
+          "status": "none",
+          "page": 10,
+          "items": []
+        },
+        {
+          "team": "Audi",
+          "status": "none",
+          "page": 11,
+          "items": []
+        },
+        {
+          "team": "Alpine",
+          "status": "none",
+          "page": 12,
+          "items": []
+        },
+        {
+          "team": "Cadillac",
+          "status": "none",
+          "page": 13,
+          "items": []
+        }
+      ]
+    }
+  ]
+}

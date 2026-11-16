@@ -1,11 +1,12 @@
 // F1 랩타임 뷰어. data/ 아래 JSON만 읽는 정적 페이지다 (scripts/fetch.mjs가 생성).
 
 import { readPreference, writePreference, readHiddenDrivers } from './preferences.js?v=20261116.1';
+import { cleanLaps, lapSegments, pitLaps } from './lap-series.js?v=20261116.2';
+import { renderCarUpgrades } from './car-upgrades.js?v=20261116.2';
 
 const $ = (id) => document.getElementById(id);
 const SVG = 'http://www.w3.org/2000/svg';
 const CLEAN_LIMIT = 1.07; // 클린: 본인 최고 랩의 107% 이내
-const FULL_LIMIT = 2.2; // 전체 랩 보기: 세션 최고 랩의 220%까지 축에 담는다 (적기 중단처럼 몇십 분짜리 랩 제외)
 const DASHES = ['', '6 4', '2 4']; // 같은 팀 선수는 색이 같으므로 선 모양으로 구분
 
 const KO_NAMES = {
@@ -122,7 +123,7 @@ function lineSwatch(d) {
 function computeStats(driver, mode) {
   const all = driver.laps;
   const best = Math.min(...all.map((l) => l[1]));
-  const used = mode === 'all' ? all : all.filter((l) => !l[2] && l[1] <= best * CLEAN_LIMIT);
+  const used = mode === 'all' ? all : cleanLaps(all, CLEAN_LIMIT);
   const times = used.map((l) => l[1]).sort((a, b) => a - b);
   const sector = (laps, k, pick) => {
     const xs = laps.map((l) => l[4 + k]).filter((v) => v > 0);
@@ -455,7 +456,7 @@ function lineChart(host, { series, bands = [], xDomain, yDomain, xTicks, yFormat
       g.append(s('path', { class: 'mark', d: `M${x - 4.5},${m.top + plotH + 3}h9l-4.5,-8z`, style: `fill:${st.color}` }));
     }
     plot.append(g);
-    const last = sr.segments.at(-1)?.at(-1);
+    const last = sr.segments.flat().filter(p => p.y >= yDomain[0] && p.y <= yDomain[1]).at(-1);
     if (last) labels.push({ y: Math.min(Math.max(Y(last.y), m.top), m.top + plotH), x: X(last.x), sr, g });
   }
 
@@ -521,76 +522,48 @@ function lineChart(host, { series, bands = [], xDomain, yDomain, xTicks, yFormat
 
 const PERIOD_LABELS = { SC: 'SC', VSC: 'VSC', RED: '적기' };
 
-// x는 랩·섹터 순서, y는 그 섹터까지 직전 세 섹터를 합친 "한 바퀴 기록".
-// 섹터 길이가 달라도 선이 톱니처럼 튀지 않고, 섹터가 끝날 때마다 값이 갱신된다.
-// 피트·세이프티카 구간도 선을 끊지 않는다. 클린 모드는 y축만 주행 구간에 맞춰 확대한다.
+// 실제 기록된 한 랩의 시간만 사용한다. 빠진 랩과 필터로 제외한 랩은 잇지 않는다.
 function renderPace(rows, data) {
-  const sessionBest = Math.min(...rows.map((r) => r.best));
   let maxX = 0;
-  const focus = []; // 클린 모드에서 y축 범위를 정할 값들
   const isRace = state.session.type === 'Race';
   const series = rows.map((r) => {
-    const sectors = new Map(); // 섹터 순번 → { 기록, 랩 }
-    for (const lap of r.driver.laps) {
-      for (let k = 0; k < 3; k++) {
-        if (lap[4 + k] > 0) sectors.set((lap[0] - 1) * 3 + k, { t: lap[4 + k], lap });
-      }
-    }
-    // 피트아웃 랩의 바로 앞 랩이 피트로 들어간 랩이다. 레이스·스프린트에서만 표시한다.
-    const pits = new Set(isRace ? r.driver.laps.filter((l) => l[2] && l[0] > 1).map((l) => l[0] - 1) : []);
-    const segments = [];
-    let current = null;
-    for (const i of [...sectors.keys()].sort((a, b) => a - b)) {
-      const [a, b, c] = [sectors.get(i - 2), sectors.get(i - 1), sectors.get(i)];
-      if (!a || !b) {
-        current = null;
-        continue;
-      }
-      const y = a.t + b.t + c.t;
-      if (!current || current.at(-1).i !== i - 1) segments.push((current = []));
-      current.push({
-        i, x: i + 1, y, t: c.t,
-        lapNo: c.lap[0], sector: (i % 3) + 1, compound: c.lap[3],
-        pit: pits.has(c.lap[0]),
-      });
-      if (y <= r.best * CLEAN_LIMIT) focus.push(y);
-      maxX = Math.max(maxX, i + 1);
-    }
-    return { driver: r.driver, segments, marks: [...pits].map((lap) => lap * 3) };
+    const pits = isRace ? pitLaps(r.driver.laps) : new Set();
+    const segments = lapSegments(r.driver.laps, state.mode);
+    maxX = Math.max(maxX, ...r.driver.laps.map(lap => lap[0]));
+    for (const point of segments.flat()) point.pit = pits.has(point.lapNo);
+    return { driver: r.driver, segments, marks: [...pits] };
   });
 
   const ys = series.flatMap((sr) => sr.segments.flatMap((seg) => seg.map((p) => p.y)));
   const host = $('chart-pace');
   if (!ys.length) {
-    host.replaceChildren(el('p', { class: 'empty', text: '이 세션에는 섹터 기록이 없습니다.' }));
+    host.replaceChildren(el('p', { class: 'empty', text: '선택한 조건에 맞는 랩 기록이 없습니다. 전체 랩으로 바꿔 보세요.' }));
     $('pace-note').textContent = '';
     return;
   }
   const lo = Math.min(...ys);
-  const top = Math.max(...ys);
-  const hi = state.mode === 'clean' && focus.length ? Math.max(...focus) : Math.min(top, sessionBest * FULL_LIMIT);
+  const hi = Math.max(...ys);
   const pad = Math.max((hi - lo) * 0.05, 0.05);
 
-  const laps = Math.ceil(maxX / 3);
+  const laps = maxX;
   const step = [1, 2, 5, 10, 20].find((x) => laps / x <= Math.max(3, host.clientWidth / 60)) ?? 50;
   const xTicks = [];
-  for (let n = step; n <= laps; n += step) xTicks.push({ v: n * 3, label: `${n}랩` });
+  for (let n = step; n <= laps; n += step) xTicks.push({ v: n, label: `${n}랩` });
 
   const periods = data.periods ?? [];
   lineChart(host, {
     series,
-    bands: periods.map((p) => ({ x1: (p.from - 1) * 3 + 1, x2: p.to * 3, label: PERIOD_LABELS[p.kind] ?? p.kind })),
-    xDomain: [1, Math.max(maxX, 4)],
+    bands: periods.map((p) => ({ x1: p.from - 0.5, x2: p.to + 0.5, label: PERIOD_LABELS[p.kind] ?? p.kind })),
+    xDomain: [0.5, Math.max(maxX + 0.5, 2)],
     yDomain: [lo - pad, hi + pad],
     xTicks,
     yFormat: (v, digits) => fmt(v, digits),
     height: 460,
-    smooth: true,
+    smooth: false,
     tip: (d, p) => [
-      `${d.name} · ${p.lapNo}랩 섹터 ${p.sector}`,
+      `${d.name} · ${p.lapNo}랩`,
       [
-        ['한 바퀴 환산', fmt(p.y)],
-        [`섹터 ${p.sector} 기록`, fmt(p.t)],
+        ['실제 랩타임', fmt(p.y)],
         ...(p.compound ? [['타이어', COMPOUNDS[p.compound] ?? p.compound]] : []),
         ...(p.pit ? [['비고', '이 랩에 피트 인']] : []),
       ],
@@ -599,16 +572,14 @@ function renderPace(rows, data) {
 
   const hasPits = series.some((sr) => sr.marks.length);
   $('pace-note').textContent =
-    'x축은 랩·섹터 순서(섹터 하나가 한 칸), y축은 그 섹터까지 직전 세 섹터를 합친 한 바퀴 기록입니다. ' +
+    'x축은 랩 번호, y축은 실제 기록된 랩타임입니다. 빠진 랩이나 제외된 랩은 선으로 잇지 않습니다. ' +
     (hasPits ? '아래쪽 ▲는 피트 스톱' : '') +
     (hasPits && periods.length ? ', ' : '') +
-    (periods.length ? '색 띠는 세이프티카(SC)·가상 세이프티카(VSC)·적기 구간' : '') +
+    (periods.length ? '색 띠는 선두 랩 기준 세이프티카(SC)·가상 세이프티카(VSC)·적기 구간' : '') +
     (hasPits || periods.length ? '입니다. ' : '') +
     (state.mode === 'clean'
-      ? '클린 랩 보기에서는 y축을 주행 구간에 맞춰 확대해서, 피트·세이프티카처럼 느린 구간은 선이 위쪽으로 벗어납니다. 전체 랩으로 바꾸면 끝까지 보입니다.'
-      : top > hi
-        ? `${fmt(hi, 1)}보다 느린 구간(적기 중단 등)은 위쪽으로 벗어납니다.`
-        : '');
+      ? '클린 랩은 피트 진입·출발 랩과 본인 최고 랩의 107%를 넘는 기록을 제외합니다.'
+      : '전체 랩은 긴 피트·적기 중단 랩까지 모두 표시하므로 세로축 범위가 넓어질 수 있습니다.');
 }
 
 // ───────── 차트 2: 섹터별 비교 ─────────
@@ -694,7 +665,7 @@ function renderSession() {
   pressed('sector-mode', 'sector', state.sectorMode);
   $('filter-note').textContent =
     state.mode === 'clean'
-      ? '피트아웃 랩과 본인 최고 랩의 107%를 넘는 랩 제외'
+      ? '피트 진입·출발 랩과 본인 최고 랩의 107%를 넘는 랩 제외'
       : '기록된 모든 랩 (피트·세이프티카 포함)';
 
   const data = state.loaded.get(state.session.key);
@@ -753,6 +724,7 @@ async function selectMeeting(meeting, wantSession) {
   state.sessions = sessions;
   state.loaded = new Map(sessions.map((x, i) => [x.key, files[i]]));
   collectDrivers();
+  renderCarUpgrades(state.year, meeting);
 
   $('meeting-title').textContent = meeting.name;
   $('meeting-sub').textContent = `${meeting.circuit} · ${meeting.country} · ${dateLabel(meeting.start)}`;
