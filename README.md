@@ -3,6 +3,11 @@
 시즌 → 경기별로 세션 순위(FP1~3, Q1~3, 레이스)와 선수별 랩·섹터 기록 그래프를 보는 정적 사이트입니다.
 데이터는 [OpenF1](https://openf1.org)에서 받아 `data/`에 JSON으로 저장합니다.
 
+업그레이드 내역, 수집 데이터 현황, 이후 기능과 데이터를 추가하는 방법은 [UPGRADE.md](UPGRADE.md)에 기록합니다.
+
+개발은 `C:\Development\f1-preview`에서 진행합니다. **GitHub Pages에서 먼저 완성한 뒤 운영 사이트에 배포**하는 순서와 폴더 구분은 [DEPLOYMENT.md](DEPLOYMENT.md)를 따릅니다.
+
+
 ## 구조
 
 - `index.html`, `assets/` — 화면 (빌드 과정·외부 라이브러리 없음)
@@ -32,6 +37,8 @@ python3 -m http.server 8000
 ```
 
 지난 시즌을 추가하려면 Actions 탭에서 워크플로를 수동 실행하며 연도를 넣으면 됩니다.
+
+Windows 운영 서버의 `serve.mjs`는 `C:\Development\f1`에 있습니다. 개발 확인은 이 폴더에서 `python -m http.server 8001`로 별도 서버를 열거나 GitHub Pages에 배포해 진행합니다.
 
 ## 화면과 집계 기준
 

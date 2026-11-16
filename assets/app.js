@@ -1,5 +1,7 @@
 // F1 랩타임 뷰어. data/ 아래 JSON만 읽는 정적 페이지다 (scripts/fetch.mjs가 생성).
 
+import { readPreference, writePreference, readHiddenDrivers } from './preferences.js?v=20261116.1';
+
 const $ = (id) => document.getElementById(id);
 const SVG = 'http://www.w3.org/2000/svg';
 const CLEAN_LIMIT = 1.07; // 클린: 본인 최고 랩의 107% 이내
@@ -34,9 +36,9 @@ const state = {
   loaded: new Map(), // 세션 키 → 세션 JSON
   session: null,
   drivers: [], // 이 경기에 나온 모든 선수 (세션 합집합, 선 모양 포함)
-  mode: localStorage.getItem('f1.mode') === 'all' ? 'all' : 'clean',
-  sectorMode: localStorage.getItem('f1.sector') === 'avg' ? 'avg' : 'best',
-  hidden: new Set(JSON.parse(localStorage.getItem('f1.hidden') || '[]')), // 체크 해제한 선수 코드
+  mode: readPreference('f1.mode', 'clean') === 'all' ? 'all' : 'clean',
+  sectorMode: readPreference('f1.sector', 'best') === 'avg' ? 'avg' : 'best',
+  hidden: readHiddenDrivers(), // 체크 해제한 선수 코드
 };
 
 // ───────── 유틸 ─────────
@@ -64,10 +66,25 @@ function fmt(sec, digits = 3) {
 const fmtGap = (sec) => `+${sec.toFixed(3)}`;
 
 const getJson = async (url) => {
-  const res = await fetch(url, { cache: 'no-cache' });
-  if (!res.ok) throw new Error(`${url}: ${res.status}`);
-  return res.json();
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 20000);
+  try {
+    const res = await fetch(url, { cache: 'no-cache', signal: controller.signal });
+    if (!res.ok) throw new Error(`${url}: ${res.status}`);
+    return await res.json();
+  } finally { clearTimeout(timer); }
 };
+
+function showLoadError(error) {
+  console.error(error);
+  $('main').hidden = true;
+  $('status').hidden = false;
+  const retry = el('button', { type: 'button', text: '다시 불러오기' });
+  retry.addEventListener('click', () => location.reload());
+  $('status').replaceChildren(
+    el('span', { text: '데이터를 불러오지 못했습니다. 연결 상태를 확인해 주세요. ' }), retry,
+  );
+}
 
 function quantile(sorted, q) {
   const pos = (sorted.length - 1) * q;
@@ -128,7 +145,7 @@ function computeStats(driver, mode) {
 function tabButton(label, selected, onClick, sub) {
   const b = el('button', { type: 'button', role: 'tab', 'aria-selected': selected }, label);
   if (sub) b.append(el('small', { text: sub }));
-  b.addEventListener('click', onClick);
+  b.addEventListener('click', () => Promise.resolve().then(onClick).catch(showLoadError));
   return b;
 }
 
@@ -210,7 +227,7 @@ function renderDrivers() {
 }
 
 function saveHidden() {
-  localStorage.setItem('f1.hidden', JSON.stringify([...state.hidden]));
+  writePreference('f1.hidden', JSON.stringify([...state.hidden]));
 }
 
 function setAll(on) {
@@ -761,14 +778,14 @@ $('lap-filter').addEventListener('click', (evt) => {
   const mode = evt.target.dataset?.mode;
   if (!mode) return;
   state.mode = mode;
-  localStorage.setItem('f1.mode', mode);
+  writePreference('f1.mode', mode);
   renderSession();
 });
 $('sector-mode').addEventListener('click', (evt) => {
   const mode = evt.target.dataset?.sector;
   if (!mode) return;
   state.sectorMode = mode;
-  localStorage.setItem('f1.sector', mode);
+  writePreference('f1.sector', mode);
   renderSession();
 });
 let lastWidth = 0;
@@ -785,7 +802,5 @@ try {
   const [year, meeting, session] = location.hash.slice(1).split('/').map(Number);
   await selectSeason(state.seasons.includes(year) ? year : state.seasons[0], { meeting, session });
 } catch (err) {
-  console.error(err);
-  $('status').hidden = false;
-  $('status').textContent = '데이터를 불러오지 못했습니다. 아직 수집 전이거나 일시적인 오류일 수 있습니다.';
+  showLoadError(err);
 }
