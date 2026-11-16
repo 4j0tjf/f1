@@ -366,7 +366,7 @@ let clipId = 0;
 
 // 선수별 선 차트.
 //   series: [{ driver, segments: [[{ x, y, ... }]] }]  — segment 단위로 선이 끊긴다
-//   series[].marks: [x] — 그 선수의 표식(피트 스톱)을 그래프 위쪽 가장자리에 ▼로 찍는다
+//   series[].marks: [x] — 그 선수의 표식(피트 스톱)을 그래프 아래쪽 가장자리에 ▲로 찍는다
 //   bands: [{ x1, x2, label }] — 배경 띠(세이프티카 구간)
 //   xTicks: [{ v, label }], yFormat(v, digits), tip(driver, point) → [제목, [[라벨, 값]]]
 function lineChart(host, { series, bands = [], xDomain, yDomain, xTicks, yFormat, height, smooth, tip }) {
@@ -397,12 +397,13 @@ function lineChart(host, { series, bands = [], xDomain, yDomain, xTicks, yFormat
     );
   }
 
+  const bandLabels = []; // 선 위에 보이도록 나중에 얹는다
   for (const b of bands) {
     const x1 = Math.max(X(b.x1), m.left);
     const x2 = Math.min(X(b.x2), m.left + plotW);
     if (x2 <= x1) continue;
-    svg.append(
-      s('rect', { class: 'band', x: x1, y: m.top, width: x2 - x1, height: plotH }),
+    svg.append(s('rect', { class: 'band', x: x1, y: m.top, width: x2 - x1, height: plotH }));
+    bandLabels.push(
       s('text', { class: 'band-label', x: (x1 + x2) / 2, y: m.top + 12, 'text-anchor': 'middle', text: b.label }),
     );
   }
@@ -434,7 +435,7 @@ function lineChart(host, { series, bands = [], xDomain, yDomain, xTicks, yFormat
     }
     for (const mx of sr.marks ?? []) {
       const x = X(mx);
-      g.append(s('path', { class: 'mark', d: `M${x - 4},${m.top - 3}h8l-4,7z`, fill: st.color }));
+      g.append(s('path', { class: 'mark', d: `M${x - 4.5},${m.top + plotH + 3}h9l-4.5,-8z`, style: `fill:${st.color}` }));
     }
     plot.append(g);
     const last = sr.segments.at(-1)?.at(-1);
@@ -457,7 +458,7 @@ function lineChart(host, { series, bands = [], xDomain, yDomain, xTicks, yFormat
   }
 
   const marker = s('circle', { class: 'marker', r: 4.5, visibility: 'hidden' });
-  svg.append(marker);
+  svg.append(...bandLabels, marker);
 
   let active = null;
   const clear = () => {
@@ -510,6 +511,7 @@ function renderPace(rows, data) {
   const sessionBest = Math.min(...rows.map((r) => r.best));
   let maxX = 0;
   const focus = []; // 클린 모드에서 y축 범위를 정할 값들
+  const isRace = state.session.type === 'Race';
   const series = rows.map((r) => {
     const sectors = new Map(); // 섹터 순번 → { 기록, 랩 }
     for (const lap of r.driver.laps) {
@@ -517,7 +519,8 @@ function renderPace(rows, data) {
         if (lap[4 + k] > 0) sectors.set((lap[0] - 1) * 3 + k, { t: lap[4 + k], lap });
       }
     }
-    const pits = new Set(r.driver.pits ?? []);
+    // 피트아웃 랩의 바로 앞 랩이 피트로 들어간 랩이다. 레이스·스프린트에서만 표시한다.
+    const pits = new Set(isRace ? r.driver.laps.filter((l) => l[2] && l[0] > 1).map((l) => l[0] - 1) : []);
     const segments = [];
     let current = null;
     for (const i of [...sectors.keys()].sort((a, b) => a - b)) {
@@ -580,7 +583,7 @@ function renderPace(rows, data) {
   const hasPits = series.some((sr) => sr.marks.length);
   $('pace-note').textContent =
     'x축은 랩·섹터 순서(섹터 하나가 한 칸), y축은 그 섹터까지 직전 세 섹터를 합친 한 바퀴 기록입니다. ' +
-    (hasPits ? '▼는 피트 스톱' : '') +
+    (hasPits ? '아래쪽 ▲는 피트 스톱' : '') +
     (hasPits && periods.length ? ', ' : '') +
     (periods.length ? '색 띠는 세이프티카(SC)·가상 세이프티카(VSC)·적기 구간' : '') +
     (hasPits || periods.length ? '입니다. ' : '') +

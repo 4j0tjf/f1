@@ -98,10 +98,9 @@ async function fetchSession(session) {
   const drivers = await get('drivers', key);
   const stints = await get('stints', key).catch(() => []);
   const results = await get('session_result', key); // 실패하면 세션 전체를 다음 실행에서 다시 시도
-  // 피트 스톱과 세이프티카 구간은 랩 번호가 모든 선수에게 같은 뜻인 레이스·스프린트에서만 쓴다.
-  const isRace = session.session_type === 'Race';
-  const pits = isRace ? await get('pit', key) : [];
-  const periods = isRace ? neutralPeriods(await get('race_control', key)) : [];
+  // 세이프티카 구간은 랩 번호가 모든 선수에게 같은 뜻인 레이스·스프린트에서만 쓴다.
+  // (피트 스톱은 랩의 피트아웃 표시로 알 수 있어 따로 받지 않는다. OpenF1의 pit 데이터는 빠진 곳이 많다.)
+  const periods = session.session_type === 'Race' ? neutralPeriods(await get('race_control', key)) : [];
 
   const compound = (num, lap) => {
     const s = stints.find(
@@ -135,8 +134,6 @@ async function fetchSession(session) {
       team: d.team_name ?? '',
       color: d.team_colour ? `#${d.team_colour}` : '',
       laps: driverLaps.sort((a, b) => a[0] - b[0]),
-      // 피트로 들어간 랩 번호
-      pits: [...new Set(pits.filter((p) => p.driver_number === num).map((p) => p.lap_number))].sort((a, b) => a - b),
     });
   }
   out.sort((a, b) => a.team.localeCompare(b.team) || a.num - b.num);
