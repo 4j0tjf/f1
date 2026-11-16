@@ -3,7 +3,7 @@
 const $ = (id) => document.getElementById(id);
 const SVG = 'http://www.w3.org/2000/svg';
 const CLEAN_LIMIT = 1.07; // 클린: 본인 최고 랩의 107% 이내
-const CLIP_LIMIT = 1.3; // 전체: 세션 최고 랩의 130%까지만 축에 담는다
+const FULL_LIMIT = 2.2; // 전체 랩 보기: 세션 최고 랩의 220%까지 축에 담는다 (적기 중단처럼 몇십 분짜리 랩 제외)
 const DASHES = ['', '6 4', '2 4']; // 같은 팀 선수는 색이 같으므로 선 모양으로 구분
 
 const KO_NAMES = {
@@ -366,8 +366,10 @@ let clipId = 0;
 
 // 선수별 선 차트.
 //   series: [{ driver, segments: [[{ x, y, ... }]] }]  — segment 단위로 선이 끊긴다
+//   series[].marks: [x] — 그 선수의 표식(피트 스톱)을 그래프 위쪽 가장자리에 ▼로 찍는다
+//   bands: [{ x1, x2, label }] — 배경 띠(세이프티카 구간)
 //   xTicks: [{ v, label }], yFormat(v, digits), tip(driver, point) → [제목, [[라벨, 값]]]
-function lineChart(host, { series, xDomain, yDomain, xTicks, yFormat, height, smooth, tip }) {
+function lineChart(host, { series, bands = [], xDomain, yDomain, xTicks, yFormat, height, smooth, tip }) {
   const width = Math.max(host.clientWidth, 280);
   const m = { left: 54, right: 40, top: 10, bottom: 26 };
   const plotW = width - m.left - m.right;
@@ -395,6 +397,16 @@ function lineChart(host, { series, xDomain, yDomain, xTicks, yFormat, height, sm
     );
   }
 
+  for (const b of bands) {
+    const x1 = Math.max(X(b.x1), m.left);
+    const x2 = Math.min(X(b.x2), m.left + plotW);
+    if (x2 <= x1) continue;
+    svg.append(
+      s('rect', { class: 'band', x: x1, y: m.top, width: x2 - x1, height: plotH }),
+      s('text', { class: 'band-label', x: (x1 + x2) / 2, y: m.top + 12, 'text-anchor': 'middle', text: b.label }),
+    );
+  }
+
   const plot = s('g', { 'clip-path': `url(#${clip})` });
   svg.append(plot);
   const points = []; // 호버 탐색용
@@ -415,7 +427,14 @@ function lineChart(host, { series, xDomain, yDomain, xTicks, yFormat, height, sm
           }),
         );
       }
-      seg.forEach((p, i) => points.push({ px: pts[i][0], py: pts[i][1], p, sr, g }));
+      seg.forEach((p, i) => {
+        // 축 범위를 벗어난 점은 화면에 없으므로 호버 대상에서 뺀다
+        if (pts[i][1] >= m.top - 4 && pts[i][1] <= m.top + plotH + 4) points.push({ px: pts[i][0], py: pts[i][1], p, sr, g });
+      });
+    }
+    for (const mx of sr.marks ?? []) {
+      const x = X(mx);
+      g.append(s('path', { class: 'mark', d: `M${x - 4},${m.top - 3}h8l-4,7z`, fill: st.color }));
     }
     plot.append(g);
     const last = sr.segments.at(-1)?.at(-1);
@@ -482,11 +501,15 @@ function lineChart(host, { series, xDomain, yDomain, xTicks, yFormat, height, sm
 
 // ───────── 차트 1: 랩 진행 (섹터 단위) ─────────
 
+const PERIOD_LABELS = { SC: 'SC', VSC: 'VSC', RED: '적기' };
+
 // x는 랩·섹터 순서, y는 그 섹터까지 직전 세 섹터를 합친 "한 바퀴 기록".
 // 섹터 길이가 달라도 선이 톱니처럼 튀지 않고, 섹터가 끝날 때마다 값이 갱신된다.
-function renderPace(rows) {
+// 피트·세이프티카 구간도 선을 끊지 않는다. 클린 모드는 y축만 주행 구간에 맞춰 확대한다.
+function renderPace(rows, data) {
   const sessionBest = Math.min(...rows.map((r) => r.best));
   let maxX = 0;
+  const focus = []; // 클린 모드에서 y축 범위를 정할 값들
   const series = rows.map((r) => {
     const sectors = new Map(); // 섹터 순번 → { 기록, 랩 }
     for (const lap of r.driver.laps) {
@@ -494,21 +517,26 @@ function renderPace(rows) {
         if (lap[4 + k] > 0) sectors.set((lap[0] - 1) * 3 + k, { t: lap[4 + k], lap });
       }
     }
-    const limit = state.mode === 'clean' ? r.best * CLEAN_LIMIT : Infinity;
+    const pits = new Set(r.driver.pits ?? []);
     const segments = [];
     let current = null;
     for (const i of [...sectors.keys()].sort((a, b) => a - b)) {
       const [a, b, c] = [sectors.get(i - 2), sectors.get(i - 1), sectors.get(i)];
-      const y = a && b ? a.t + b.t + c.t : null;
-      if (y == null || y > limit) {
+      if (!a || !b) {
         current = null;
         continue;
       }
+      const y = a.t + b.t + c.t;
       if (!current || current.at(-1).i !== i - 1) segments.push((current = []));
-      current.push({ i, x: i + 1, y, lapNo: c.lap[0], sector: (i % 3) + 1, t: c.t, compound: c.lap[3] });
+      current.push({
+        i, x: i + 1, y, t: c.t,
+        lapNo: c.lap[0], sector: (i % 3) + 1, compound: c.lap[3],
+        pit: pits.has(c.lap[0]),
+      });
+      if (y <= r.best * CLEAN_LIMIT) focus.push(y);
       maxX = Math.max(maxX, i + 1);
     }
-    return { driver: r.driver, segments };
+    return { driver: r.driver, segments, marks: [...pits].map((lap) => lap * 3) };
   });
 
   const ys = series.flatMap((sr) => sr.segments.flatMap((seg) => seg.map((p) => p.y)));
@@ -520,7 +548,7 @@ function renderPace(rows) {
   }
   const lo = Math.min(...ys);
   const top = Math.max(...ys);
-  const hi = Math.min(top, sessionBest * CLIP_LIMIT);
+  const hi = state.mode === 'clean' && focus.length ? Math.max(...focus) : Math.min(top, sessionBest * FULL_LIMIT);
   const pad = Math.max((hi - lo) * 0.05, 0.05);
 
   const laps = Math.ceil(maxX / 3);
@@ -528,8 +556,10 @@ function renderPace(rows) {
   const xTicks = [];
   for (let n = step; n <= laps; n += step) xTicks.push({ v: n * 3, label: `${n}랩` });
 
+  const periods = data.periods ?? [];
   lineChart(host, {
     series,
+    bands: periods.map((p) => ({ x1: (p.from - 1) * 3 + 1, x2: p.to * 3, label: PERIOD_LABELS[p.kind] ?? p.kind })),
     xDomain: [1, Math.max(maxX, 4)],
     yDomain: [lo - pad, hi + pad],
     xTicks,
@@ -542,15 +572,22 @@ function renderPace(rows) {
         ['한 바퀴 환산', fmt(p.y)],
         [`섹터 ${p.sector} 기록`, fmt(p.t)],
         ...(p.compound ? [['타이어', COMPOUNDS[p.compound] ?? p.compound]] : []),
+        ...(p.pit ? [['비고', '이 랩에 피트 인']] : []),
       ],
     ],
   });
+
+  const hasPits = series.some((sr) => sr.marks.length);
   $('pace-note').textContent =
     'x축은 랩·섹터 순서(섹터 하나가 한 칸), y축은 그 섹터까지 직전 세 섹터를 합친 한 바퀴 기록입니다. ' +
+    (hasPits ? '▼는 피트 스톱' : '') +
+    (hasPits && periods.length ? ', ' : '') +
+    (periods.length ? '색 띠는 세이프티카(SC)·가상 세이프티카(VSC)·적기 구간' : '') +
+    (hasPits || periods.length ? '입니다. ' : '') +
     (state.mode === 'clean'
-      ? '본인 최고 랩의 107%를 넘는 구간(피트, 세이프티카 등)은 선을 끊었습니다.'
+      ? '클린 랩 보기에서는 y축을 주행 구간에 맞춰 확대해서, 피트·세이프티카처럼 느린 구간은 선이 위쪽으로 벗어납니다. 전체 랩으로 바꾸면 끝까지 보입니다.'
       : top > hi
-        ? `${fmt(hi, 1)}보다 느린 구간은 위쪽으로 잘려 보입니다.`
+        ? `${fmt(hi, 1)}보다 느린 구간(적기 중단 등)은 위쪽으로 벗어납니다.`
         : '');
 }
 
@@ -638,7 +675,7 @@ function renderSession() {
   $('filter-note').textContent =
     state.mode === 'clean'
       ? '피트아웃 랩과 본인 최고 랩의 107%를 넘는 랩 제외'
-      : '기록된 모든 랩 (세이프티카·인랩 포함)';
+      : '기록된 모든 랩 (피트·세이프티카 포함)';
 
   const data = state.loaded.get(state.session.key);
   const allStats = data.drivers.filter((d) => d.laps.length).map((d) => computeStats(d, state.mode));
@@ -652,7 +689,7 @@ function renderSession() {
     $('pace-note').textContent = '';
     return;
   }
-  renderPace(rows);
+  renderPace(rows, data);
   renderSectors(rows, allStats);
   renderTable(rows);
 }

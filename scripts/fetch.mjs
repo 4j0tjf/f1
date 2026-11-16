@@ -17,7 +17,7 @@ const HOUR = 3600e3;
 const READY_AFTER = 0.5 * HOUR; // 세션 종료 후 이만큼 지나야 받기 시작
 const SETTLE_AFTER = 6 * HOUR; // 이보다 일찍 받은 데이터는 한 번 더 받아 보정
 const GIVE_UP_AFTER = 7 * 24 * HOUR; // 이 뒤에 확인해도 랩이 없는 세션(취소 등)은 그만 시도
-const REQUEST_GAP = 2500; // OpenF1 무료 한도: 분당 30회
+const REQUEST_GAP = 2200; // OpenF1 무료 한도: 분당 30회
 
 const args = process.argv.slice(2);
 const force = args.includes('--force');
@@ -61,6 +61,35 @@ async function readJson(file, fallback) {
 
 const writeJson = (file, value) => writeFile(file, JSON.stringify(value) + '\n');
 
+// 레이스 컨트롤 메시지에서 세이프티카(SC), 가상 세이프티카(VSC), 적기 중단(RED) 구간을
+// [{ kind, from, to }] (선두 기준 랩 번호, 양 끝 포함)로 뽑는다.
+function neutralPeriods(messages) {
+  const periods = [];
+  let open = null;
+  const close = (lap) => {
+    if (open) periods.push({ ...open, to: Math.max(lap, open.from) });
+    open = null;
+  };
+  const start = (kind, lap) => {
+    if (open?.kind === kind) return;
+    close(lap);
+    open = { kind, from: lap };
+  };
+  for (const m of [...messages].sort((a, b) => a.date.localeCompare(b.date))) {
+    const lap = m.lap_number ?? 1;
+    const text = m.message ?? '';
+    if (m.category === 'SafetyCar') {
+      const kind = /VSC|VIRTUAL/.test(text) ? 'VSC' : 'SC';
+      if (/DEPLOYED/.test(text)) start(kind, lap);
+      else if (/ENDING|IN THIS LAP/.test(text) && open?.kind === kind) close(lap);
+    } else if (m.category === 'SessionStatus') {
+      if (/ABORTED/.test(text)) start('RED', lap);
+      else if (open && /STARTED|FINISHED/.test(text)) close(lap);
+    }
+  }
+  return periods;
+}
+
 async function fetchSession(session) {
   const key = { session_key: session.session_key };
   const laps = await get('laps', key);
@@ -69,6 +98,10 @@ async function fetchSession(session) {
   const drivers = await get('drivers', key);
   const stints = await get('stints', key).catch(() => []);
   const results = await get('session_result', key); // 실패하면 세션 전체를 다음 실행에서 다시 시도
+  // 피트 스톱과 세이프티카 구간은 랩 번호가 모든 선수에게 같은 뜻인 레이스·스프린트에서만 쓴다.
+  const isRace = session.session_type === 'Race';
+  const pits = isRace ? await get('pit', key) : [];
+  const periods = isRace ? neutralPeriods(await get('race_control', key)) : [];
 
   const compound = (num, lap) => {
     const s = stints.find(
@@ -102,6 +135,8 @@ async function fetchSession(session) {
       team: d.team_name ?? '',
       color: d.team_colour ? `#${d.team_colour}` : '',
       laps: driverLaps.sort((a, b) => a[0] - b[0]),
+      // 피트로 들어간 랩 번호
+      pits: [...new Set(pits.filter((p) => p.driver_number === num).map((p) => p.lap_number))].sort((a, b) => a - b),
     });
   }
   out.sort((a, b) => a.team.localeCompare(b.team) || a.num - b.num);
@@ -116,7 +151,7 @@ async function fetchSession(session) {
       status: r.dsq ? 'DSQ' : r.dns ? 'DNS' : r.dnf ? 'DNF' : '',
     }))
     .sort((a, b) => (a.pos ?? 99) - (b.pos ?? 99) || (b.laps ?? 0) - (a.laps ?? 0));
-  return { key: session.session_key, drivers: out, results: classification };
+  return { key: session.session_key, drivers: out, results: classification, periods };
 }
 
 async function updateSeasons() {
