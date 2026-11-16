@@ -165,10 +165,16 @@ function collectDrivers() {
   const byCode = new Map();
   for (const x of state.sessions) {
     for (const d of state.loaded.get(x.key).drivers) {
-      if (!byCode.has(d.code)) byCode.set(d.code, { num: d.num, code: d.code, name: d.name, team: d.team, color: d.color || '#888' });
+      if (!byCode.has(d.code)) {
+        byCode.set(d.code, { num: d.num, code: d.code, name: d.name, team: d.team, color: d.color || '#888', count: 0 });
+      }
+      byCode.get(d.code).count++;
     }
   }
-  const drivers = [...byCode.values()].sort((a, b) => a.team.localeCompare(b.team) || a.num - b.num);
+  // 팀 안에서는 세션에 많이 나온 선수(정규 드라이버)가 먼저 와서 실선·파선을 받는다.
+  const drivers = [...byCode.values()].sort(
+    (a, b) => a.team.localeCompare(b.team) || b.count - a.count || a.num - b.num,
+  );
   const seen = new Map();
   for (const d of drivers) {
     const i = seen.get(d.team) ?? 0;
