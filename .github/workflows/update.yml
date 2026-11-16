@@ -1,0 +1,87 @@
+name: 데이터 갱신 및 배포
+
+on:
+  schedule:
+    - cron: '17 * * * *' # 매시간: 새로 끝난 세션이 있으면 추가
+  workflow_dispatch:
+    inputs:
+      year:
+        description: '시즌 (비우면 올해)'
+        required: false
+      force:
+        description: '이미 받은 세션도 다시 받기'
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+    paths-ignore: ['README.md']
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 랩타임 수집
+        env:
+          YEAR: ${{ inputs.year }}
+          FORCE: ${{ inputs.force }}
+        run: |
+          args=()
+          [ -n "$YEAR" ] && args+=(--year "$YEAR")
+          [ "$FORCE" = "true" ] && args+=(--force)
+          node scripts/fetch.mjs "${args[@]}"
+
+      - name: 커밋
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then
+            # 저장소가 60일간 조용하면 GitHub가 예약 실행을 꺼 버린다. 비시즌에도 살아 있도록 가끔 기록을 남긴다.
+            last=$(git log -1 --format=%ct)
+            if [ $(( $(date +%s) - last )) -gt $(( 45 * 86400 )) ]; then
+              git commit --allow-empty -m "chore: 예약 실행 유지"
+              git push
+            fi
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "data: 랩타임 갱신"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  deploy:
+    needs: update
+    if: needs.update.outputs.changed == 'true' || github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }} # update 잡이 방금 올린 커밋까지 포함
+      - run: mkdir _site && cp -r index.html assets data _site/
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deploy
+        uses: actions/deploy-pages@v4

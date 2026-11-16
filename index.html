@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F1 랩타임</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="top">
+  <h1>F1 랩타임</h1>
+  <nav id="seasons" class="tabs seasons" aria-label="시즌"></nav>
+</header>
+
+<nav id="meetings" class="tabs meetings" aria-label="경기"></nav>
+
+<main id="main" hidden>
+  <div class="session-bar">
+    <div>
+      <h2 id="meeting-title"></h2>
+      <p id="meeting-sub" class="muted"></p>
+    </div>
+    <nav id="sessions" class="pills" aria-label="세션"></nav>
+  </div>
+
+  <div class="layout">
+    <aside class="card drivers">
+      <div class="drivers-head">
+        <h3>선수</h3>
+        <span>
+          <button type="button" id="all-on">전체</button>
+          <button type="button" id="all-off">해제</button>
+        </span>
+      </div>
+      <div id="driver-list"></div>
+    </aside>
+
+    <div class="charts">
+      <div class="filter-row">
+        <span class="muted">평균·분포에 쓸 랩</span>
+        <div class="pills" id="lap-filter" role="group" aria-label="랩 필터">
+          <button type="button" data-mode="clean">클린 랩</button>
+          <button type="button" data-mode="all">전체 랩</button>
+        </div>
+        <span class="muted" id="filter-note"></span>
+      </div>
+
+      <section class="card">
+        <div class="card-head">
+          <h3>최고 랩 · 평균 랩</h3>
+          <div class="legend">
+            <span><i class="dot best"></i>최고 랩</span>
+            <span><i class="dot avg"></i>평균 랩</span>
+          </div>
+        </div>
+        <div id="chart-summary" class="chart"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <h3>랩타임 분포</h3>
+          <div class="legend">
+            <span><i class="dot lap"></i>랩 1개</span>
+            <span><i class="box"></i>중간 50% 구간과 중앙값</span>
+          </div>
+        </div>
+        <div id="chart-dist" class="chart"></div>
+        <p class="muted note" id="dist-note"></p>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><h3>표로 보기</h3></div>
+        <div class="table-wrap"><table id="table"></table></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<p id="status" class="status">불러오는 중…</p>
+
+<footer class="muted">
+  데이터: <a href="https://openf1.org" rel="noopener">OpenF1</a> · 세션이 끝나면 자동으로 추가됩니다
+  <span id="updated"></span>
+</footer>
+
+<div id="tooltip" class="tooltip" hidden></div>
+<script type="module" src="assets/app.js"></script>
+</body>
+</html>
