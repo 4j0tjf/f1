@@ -2,7 +2,7 @@
 
 import { readPreference, writePreference, readHiddenDrivers } from './preferences.js?v=20261116.1';
 import { cleanLaps, lapSegments, pitLaps } from './lap-series.js?v=20261116.2';
-import { renderCarUpgrades } from './car-upgrades.js?v=20261116.2';
+import { renderCarUpgrades } from './car-upgrades.js?v=20261116.3';
 
 const $ = (id) => document.getElementById(id);
 const SVG = 'http://www.w3.org/2000/svg';

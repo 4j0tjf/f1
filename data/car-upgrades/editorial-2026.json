@@ -1,0 +1,20 @@
+{
+  "checked": "2026-11-16",
+  "experts": {
+    "1279": [{"team":"Aston Martin","author":"Mark Hughes · Giorgio Piola","role":"F1 TECH WEEKLY","summary":"Aston Martin의 프런트 윙과 플로어 유도 장치는 차 앞쪽의 공기를 바깥으로 돌리려는 방향으로 해석됩니다.","source":"https://www.formula1.com/en/latest/article/tech-weekly-the-aston-martin-aerodynamic-upgrades-that-hint-at-the-amr26s.4uJ8sTMwIuhpxU9LUiqNLs"}],
+    "1284": [{"team":"Ferrari","author":"Mark Hughes · Giorgio Piola","role":"F1 TECH WEEKLY","summary":"Ferrari의 대형 패키지는 성능 향상을 보였지만, 마이애미의 극심한 열과 스프린트 일정 때문에 실제 경쟁력 판단에는 추가 검증이 필요합니다.","source":"https://www.formula1.com/en/latest/article/tech-weekly-why-there-should-be-more-to-come-from-ferraris-major-miami-upgrade-package.3bR9GGw2vicxyoVKbxhszt"}],
+    "1285": [{"team":"Mercedes","author":"Mark Hughes · Giorgio Piola","role":"F1 TECH WEEKLY","summary":"Mercedes의 여러 신형 부품은 특히 후방을 중심으로 다양한 조건에서 다운포스를 확보하려는 하나의 통합 패키지입니다.","source":"https://www.formula1.com/en/latest/article/tech-weekly-how-mercedes-hit-back-at-their-rivals-with-a-potent-canadian-grand-prix-upgrade-package.3gsbmXijbkdHgvf8V9msZ8"}],
+    "1286": [{"team":null,"author":"Mark Hughes · Giorgio Piola","role":"F1 TECH WEEKLY","summary":"모나코에서는 직선 모드를 쓰지 않아 그 공간을 추가 윙렛에 활용할 수 있었고, 항력보다 다운포스를 우선하는 서킷 특성이 이런 선택을 뒷받침합니다.","source":"https://www.formula1.com/en/latest/article/tech-weekly-how-teams-adapted-to-the-unique-challenge-of-monaco.2BhBX6F2NgIpo2ysU8Utiv.2BhBX6F2NgIpo2ysU8Utiv"}],
+    "1287": [{"team":"Ferrari","author":"Mark Hughes · Giorgio Piola","role":"F1 TECH WEEKLY","summary":"Ferrari의 노즈부터 디퓨저까지의 변화는 개별 부품 교체보다 다운포스와 효율을 함께 높이려는 일관된 패키지로 봐야 합니다.","source":"https://www.formula1.com/en/latest/article/tech-weekly-the-ferrari-updates-that-helped-hamilton-win-in-barcelona.6Tt2SyxpLFCuqVXRyiYGJa"}],
+    "1291": [{"team":"Aston Martin","author":"Mark Hughes","role":"F1 기술분석가","summary":"Aston Martin의 큰 변화는 디퓨저에 더 안정적인 기류를 공급해 높은 후방 차고에서도 바닥 공력을 활용하려는 방향입니다.","source":"https://www.formula1.com/en/latest/article/a-closer-look-at-aston-martins-major-upgrades-and-the-overall-theme-they-are-chasing.6Ob4CsAvJA3H4ZoB7YYRlk.6Ob4CsAvJA3H4ZoB7YYRlk"}],
+    "1292": [{"team":"McLaren","author":"Neil Houldey","role":"McLaren 기술디렉터 · F1.com 인터뷰","summary":"잔드보르트의 McLaren 변경 부품들은 서로 의존하는 단일 패키지가 아니라 각각 독립적으로 공력 성능을 더하는 요소들입니다.","source":"https://www.formula1.com/en/latest/article/what-do-mclarens-newest-upgrades-tell-us-ahead-of-monza.7mEyyZpwgfcidhUIos5Ckv"}],
+    "1297": [{"team":"Ferrari","author":"Mark Hughes · Giorgio Piola","role":"F1 TECH WEEKLY","summary":"Ferrari의 오스틴 업데이트는 후방 다운포스 강화가 주목적이지만, 팀은 플로어 앞부분의 하중도 늘었다고 설명합니다.","source":"https://www.formula1.com/en/latest/article/what-went-into-ferraris-latest-upgrade-package-in-the-united-states.3I72X1Dos3Nty2sNxMfDD4"}],
+    "1299": [{"team":"McLaren","author":"Mark Hughes · Giorgio Piola","role":"F1 TECH WEEKLY","summary":"McLaren은 프런트 윙 연결 방식을 Mercedes와 반대로 바꿨으며, 좋은 해법은 차 전체의 공력 특성에 따라 달라집니다.","source":"https://www.formula1.com/en/latest/article/why-mclaren-went-the-opposite-way-to-mercedes-on-their-front-wing.6adMZ9ne0eiXVRofKcPgF8"}]
+  },
+  "itemOverrides": {
+    "1299|McLaren|Front Wing": {"changeExplanation":"프런트 윙 전체를 새로운 설계로 교체했습니다.","effectExplanation":"플로어와 차체 외장으로 향하는 공기의 흐름을 정돈해 차량 전체의 공력 성능을 높이려는 변경입니다."},
+    "1299|McLaren|Rear Wing": {"changeExplanation":"이번 경기를 위해 리어 윙 어셈블리를 새로 설계했습니다.","effectExplanation":"다양한 주행 조건에서 공력 하중을 효율적으로 확보하는 것이 팀이 밝힌 목표입니다."},
+    "1299|McLaren|Beam Wing": {"changeExplanation":"새 리어 윙과 함께 사용할 빔 윙을 새로 설계했습니다.","effectExplanation":"리어 윙과의 상호작용을 맞추고 그 주변의 공기 흐름을 더 잘 정돈하려는 변경입니다."},
+    "1299|McLaren|Floor Furniture": {"changeExplanation":"플로어 주변의 기류 유도용 부속물에 소규모 형상 수정을 적용했습니다.","effectExplanation":"바닥 주변의 공기 흐름을 개선해 플로어가 만드는 공력 성능을 높이려는 변경입니다."}
+  }
+}

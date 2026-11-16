@@ -13,8 +13,32 @@ test('each completed GP has eleven distinct teams with an official source',()=>{
     for(const team of entry.teams){
       assert.notEqual(team.status,'unavailable');
       if(team.status==='none')assert.equal(team.items.length,0);
-      for(const item of team.items)assert.ok(item.component&&item.purpose&&item.page>1);
+      for(const item of team.items){
+        assert.ok(item.component&&item.purpose&&item.page>1);
+        assert.ok(item.changeExplanation?.length>12);
+        assert.ok(item.effectExplanation?.length>12);
+      }
+      for(const item of team.items)assert.ok(item.changeExplanation&&item.effectExplanation);
     }
+  }
+});
+
+test('shared FIA package descriptions are retained for separately listed parts',()=>{
+  const team=data.meetings.find(m=>m.key===1287).teams.find(t=>t.team==='Ferrari');
+  const item=team.items.find(i=>i.component==='Front Wing Endplate');
+  assert.equal(item.sharedExplanation,true);
+  assert.match(item.effectExplanation,/패키지 공통 설명/);
+  assert.notEqual(item.purpose,'성능 개선');
+});
+
+test('expert summaries identify a real author, scope and primary source',()=>{
+  const comment=data.meetings.find(m=>m.key===1299).expertCommentaries[0];
+  assert.equal(comment.team,'McLaren');
+  assert.match(comment.author,/Mark Hughes/);
+  assert.match(comment.source,/^https:\/\/www\.formula1\.com\/en\/latest\/article\//);
+  for(const m of data.meetings)for(const c of m.expertCommentaries){
+    assert.ok(c.author&&c.summary&&c.role);
+    assert.ok(!c.team||m.teams.some(t=>t.team===c.team));
   }
 });
 test('Brazil reports four McLaren changes and no submitted changes from Mercedes',()=>{

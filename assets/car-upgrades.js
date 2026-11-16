@@ -15,12 +15,24 @@ function link(source,page,text) {
   node.href=url.href;node.target='_blank';node.rel='noopener';
   return node;
 }
+function expertLink(source) {
+  const url=new URL(source);
+  if(url.protocol!=='https:'||url.hostname!=='www.formula1.com')throw new Error('Invalid expert source');
+  const node=el('a','해설 원문 ↗','upgrade-source');
+  node.href=url.href;node.target='_blank';node.rel='noopener';
+  return node;
+}
+function explanation(label,text) {
+  const node=el('p',null,'upgrade-explanation');
+  node.append(el('span',label,'explanation-label'),document.createTextNode(text));
+  return node;
+}
 async function load(year) {
   if(!cache.has(year))cache.set(year,(async()=>{
     const controller=new AbortController();
     const timer=setTimeout(()=>controller.abort(),20000);
     try {
-      const response=await fetch(`data/car-upgrades/${year}.json`,{cache:'no-cache',signal:controller.signal});
+      const response=await fetch(`data/car-upgrades/${year}.json?v=20261116.3`,{cache:'no-cache',signal:controller.signal});
       if(!response.ok)throw new Error(`Car upgrades: ${response.status}`);
       return await response.json();
     }finally{clearTimeout(timer);}
@@ -58,18 +70,32 @@ export async function renderCarUpgrades(year,meeting) {
     select.disabled=false;
     function render(){
       host.replaceChildren();
+      const comments=(entry.expertCommentaries??[]).filter(comment=>!select.value||!comment.team||comment.team===select.value);
+      if(comments.length){
+        const comment=comments[0];
+        const box=el('aside',null,'expert-note');
+        box.append(el('strong',`전문가 한줄평${comment.team?' · '+comment.team:''}`));
+        box.append(el('p',comment.summary,'expert-summary'));
+        const attribution=el('p',`${comment.author} · ${comment.role} · 해설 요약 `,'muted');
+        attribution.append(expertLink(comment.source));box.append(attribution);host.append(box);
+      }else{
+        host.append(el('p','전문가 한줄평: 이 경기·팀의 별도 해설은 아직 출처를 확인하지 못했습니다.','muted expert-unavailable'));
+      }
       const selected=select.value?teams.filter(team=>team.team===select.value):teams.filter(team=>team.items.length);
       selected.forEach((team,index)=>{
         const card=el('details',null,'team-upgrade');
         card.open=!!select.value||index===0;
         card.append(el('summary',`${team.team} · ${team.items.length}건`));
+        if(team.technicalSummary)card.append(explanation('팀 기술설명 요약',team.technicalSummary));
         if(!team.items.length)card.append(el('p',team.status==='none'?'이 경기에 업데이트를 제출하지 않았습니다.':'이 팀의 제출 자료를 아직 확인하지 못했습니다.','muted'));
         const list=el('ul');
         for(const item of team.items){
           const row=el('li');
           row.append(el('strong',labels[item.component]||item.component));
           if(labels[item.component])row.append(el('span',` ${item.component}`,'muted component-original'));
-          row.append(el('p',[item.change,item.detail,`목적: ${item.purpose}`].filter(Boolean).join(' · ')));
+          row.append(el('p',`목적: ${item.purpose}`,'upgrade-purpose'));
+          row.append(explanation('변경 내용',item.changeExplanation||[item.change,item.detail].filter(Boolean).join(' · ')));
+          row.append(explanation('노리는 효과',item.effectExplanation||'원본에 효과가 별도로 설명되지 않았습니다.'));
           row.append(link(entry.source,item.page,`원본 ${item.page}쪽 ↗`));
           list.append(row);
         }

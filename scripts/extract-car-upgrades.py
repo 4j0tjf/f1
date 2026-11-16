@@ -4,11 +4,14 @@ python scripts/extract-car-upgrades.py 2026
 import json, re, sys
 from pathlib import Path
 import pdfplumber
+from upgrade_explanations import explain_item, team_summary
 
 ROOT = Path(__file__).resolve().parents[1]
 year = int(sys.argv[1]) if len(sys.argv) > 1 else 2026
 cache = ROOT / f'tmp/fia/{year}'
 manifest = json.loads((cache/'sources.json').read_text(encoding='utf-8'))
+editorial_file=ROOT/f'data/car-upgrades/editorial-{year}.json'
+editorial=json.loads(editorial_file.read_text(encoding='utf-8')) if editorial_file.exists() else {}
 aliases = [
     ('McLaren','McLaren'),('Mercedes','Mercedes'),('Red Bull Racing','Red Bull Racing'),
     ('Ferrari','Ferrari'),('Williams','Williams'),('Racing Bulls','Racing Bulls'),
@@ -42,7 +45,14 @@ for source in manifest['meetings']:
                     item=None
                     for row in table:
                         if row[0] and re.fullmatch(r'\d+',clean(row[0])):
+                            previous_item=item
                             item={name:clean(' '.join(x for x in row[start:end] if x)) for name,start,end in groups}
+                            shared=[]
+                            for name,start,end in groups:
+                                if name!='component' and previous_item and all(cell is None for cell in row[start:end]):
+                                    item[name]=previous_item[name]
+                                    shared.append(name)
+                            if shared:item['sharedFields']=shared
                             item['page']=page_num
                             current['items'].append(item)
                             current['status']='reported'
@@ -79,9 +89,15 @@ for source in manifest['meetings']:
             facts=[]
             for text,label in [('camber','캠버 변경'),('endplate','엔드플레이트 변경'),('inlet','흡입구 변경'),('outlet','배출구 변경'),('louvre','루버 변경'),('slot','슬롯 변경'),('span','폭 변경'),('chord','시위 변경'),('height','높이 변경'),('incidence','설치각 변경'),('fence','펜스 변경'),('edge','가장자리 변경')]:
                 if text in geometry:facts.append(label)
-            published['items'].append({'component':item['component'],'purpose':' · '.join(purposes) or '성능 개선',
-                                       'change':change,'detail':' · '.join(facts[:3]),'page':item['page']})
+            result={'component':item['component'],'purpose':' · '.join(purposes) or '성능 개선',
+                                       'change':change,'detail':' · '.join(facts[:3]),'page':item['page'],
+                                       'sharedExplanation':bool(item.get('sharedFields'))}
+            result.update(explain_item(item,result))
+            result.update(editorial.get('itemOverrides',{}).get(f"{entry['key']}|{team['team']}|{item['component']}",{}))
+            published['items'].append(result)
+        published['technicalSummary']=team_summary(team['team'],published['items'])
         entry['teams'].append(published)
+    entry['expertCommentaries']=editorial.get('experts',{}).get(str(entry['key']),[])
     output['meetings'].append(entry)
     print(source['key'],entry['status'],sum(len(t['items']) for t in entry['teams']),[t['team'] for t in entry['teams'] if t['status']=='unavailable'])
 (cache/'extracted.json').write_text(json.dumps(raw_output,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
