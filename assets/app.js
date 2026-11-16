@@ -3,6 +3,7 @@
 const $ = (id) => document.getElementById(id);
 const SVG = 'http://www.w3.org/2000/svg';
 const CLEAN_LIMIT = 1.07; // 클린: 본인 최고 랩의 107% 이내
+const PACE_CUT = 1.035; // 클린 랩 보기: 본인 중앙값의 103.5%를 넘는 구간은 그래프에서 잘라낸다
 const FULL_LIMIT = 2.2; // 전체 랩 보기: 세션 최고 랩의 220%까지 축에 담는다 (적기 중단처럼 몇십 분짜리 랩 제외)
 const DASHES = ['', '6 4', '2 4']; // 같은 팀 선수는 색이 같으므로 선 모양으로 구분
 
@@ -510,7 +511,7 @@ const PERIOD_LABELS = { SC: 'SC', VSC: 'VSC', RED: '적기' };
 function renderPace(rows, data) {
   const sessionBest = Math.min(...rows.map((r) => r.best));
   let maxX = 0;
-  const focus = []; // 클린 모드에서 y축 범위를 정할 값들
+  let anyCut = false;
   const isRace = state.session.type === 'Race';
   const series = rows.map((r) => {
     const sectors = new Map(); // 섹터 순번 → { 기록, 랩 }
@@ -522,6 +523,7 @@ function renderPace(rows, data) {
     // 피트아웃 랩의 바로 앞 랩이 피트로 들어간 랩이다. 레이스·스프린트에서만 표시한다.
     const pits = new Set(isRace ? r.driver.laps.filter((l) => l[2] && l[0] > 1).map((l) => l[0] - 1) : []);
     const segments = [];
+    const normal = []; // 본인 최고 랩의 107% 이내 값
     let current = null;
     for (const i of [...sectors.keys()].sort((a, b) => a - b)) {
       const [a, b, c] = [sectors.get(i - 2), sectors.get(i - 1), sectors.get(i)];
@@ -536,8 +538,23 @@ function renderPace(rows, data) {
         lapNo: c.lap[0], sector: (i % 3) + 1, compound: c.lap[3],
         pit: pits.has(c.lap[0]),
       });
-      if (y <= r.best * CLEAN_LIMIT) focus.push(y);
+      if (y <= r.best * CLEAN_LIMIT) normal.push(y);
       maxX = Math.max(maxX, i + 1);
+    }
+    // 클린 모드: 본인 평소 페이스(중앙값)보다 3.5% 넘게 느린 구간은 피트·세이프티카·황기 등으로
+    // 느려진 것으로 보고 선을 끊는다. 그래야 y축이 주행 구간에 맞춰져 선들이 겹치지 않는다.
+    if (state.mode === 'clean' && normal.length) {
+      const cut = quantile(normal.sort((a, b) => a - b), 0.5) * PACE_CUT;
+      const kept = [];
+      for (const seg of segments) {
+        let run = null;
+        for (const p of seg) {
+          if (p.y > cut) [run, anyCut] = [null, true];
+          else if (run) run.push(p);
+          else kept.push((run = [p]));
+        }
+      }
+      return { driver: r.driver, segments: kept, marks: [...pits].map((lap) => lap * 3) };
     }
     return { driver: r.driver, segments, marks: [...pits].map((lap) => lap * 3) };
   });
@@ -551,7 +568,7 @@ function renderPace(rows, data) {
   }
   const lo = Math.min(...ys);
   const top = Math.max(...ys);
-  const hi = state.mode === 'clean' && focus.length ? Math.max(...focus) : Math.min(top, sessionBest * FULL_LIMIT);
+  const hi = Math.min(top, sessionBest * FULL_LIMIT);
   const pad = Math.max((hi - lo) * 0.05, 0.05);
 
   const laps = Math.ceil(maxX / 3);
@@ -588,7 +605,9 @@ function renderPace(rows, data) {
     (periods.length ? '색 띠는 세이프티카(SC)·가상 세이프티카(VSC)·적기 구간' : '') +
     (hasPits || periods.length ? '입니다. ' : '') +
     (state.mode === 'clean'
-      ? '클린 랩 보기에서는 y축을 주행 구간에 맞춰 확대해서, 피트·세이프티카처럼 느린 구간은 선이 위쪽으로 벗어납니다. 전체 랩으로 바꾸면 끝까지 보입니다.'
+      ? anyCut
+        ? '클린 랩 보기에서는 선수마다 평소 페이스보다 3.5% 넘게 느린 구간(피트, 세이프티카, 황기 등)을 잘라내 선이 끊깁니다. 전체 랩으로 바꾸면 끝까지 보입니다.'
+        : ''
       : top > hi
         ? `${fmt(hi, 1)}보다 느린 구간(적기 중단 등)은 위쪽으로 벗어납니다.`
         : '');
