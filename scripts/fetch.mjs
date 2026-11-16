@@ -68,6 +68,7 @@ async function fetchSession(session) {
   if (!timed.length) return null;
   const drivers = await get('drivers', key);
   const stints = await get('stints', key).catch(() => []);
+  const results = await get('session_result', key); // 실패하면 세션 전체를 다음 실행에서 다시 시도
 
   const compound = (num, lap) => {
     const s = stints.find(
@@ -79,12 +80,15 @@ async function fetchSession(session) {
   const byNumber = new Map();
   for (const l of timed) {
     if (!byNumber.has(l.driver_number)) byNumber.set(l.driver_number, []);
-    // [랩 번호, 랩타임(초), 피트아웃 랩 여부, 타이어 컴파운드 첫 글자]
+    // [랩 번호, 랩타임(초), 피트아웃 랩 여부, 타이어 컴파운드 첫 글자, 섹터1, 섹터2, 섹터3]
     byNumber.get(l.driver_number).push([
       l.lap_number,
       Math.round(l.lap_duration * 1000) / 1000,
       l.is_pit_out_lap ? 1 : 0,
       compound(l.driver_number, l.lap_number),
+      l.duration_sector_1 ?? null,
+      l.duration_sector_2 ?? null,
+      l.duration_sector_3 ?? null,
     ]);
   }
 
@@ -101,7 +105,18 @@ async function fetchSession(session) {
     });
   }
   out.sort((a, b) => a.team.localeCompare(b.team) || a.num - b.num);
-  return { key: session.session_key, drivers: out };
+  // 공식 순위. 퀄리파잉은 time·gap이 [Q1, Q2, Q3] 배열이다.
+  const classification = results
+    .map((r) => ({
+      num: r.driver_number,
+      pos: r.position ?? null,
+      laps: r.number_of_laps ?? null,
+      time: r.duration ?? null,
+      gap: r.gap_to_leader ?? null,
+      status: r.dsq ? 'DSQ' : r.dns ? 'DNS' : r.dnf ? 'DNF' : '',
+    }))
+    .sort((a, b) => (a.pos ?? 99) - (b.pos ?? 99) || (b.laps ?? 0) - (a.laps ?? 0));
+  return { key: session.session_key, drivers: out, results: classification };
 }
 
 async function updateSeasons() {

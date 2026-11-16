@@ -2,8 +2,9 @@
 
 const $ = (id) => document.getElementById(id);
 const SVG = 'http://www.w3.org/2000/svg';
-const CLEAN_LIMIT = 1.07; // 클린 랩: 본인 최고 랩의 107% 이내
-const CLIP_LIMIT = 1.3; // 전체 랩 분포는 세션 최고 랩의 130%까지만 그린다
+const CLEAN_LIMIT = 1.07; // 클린: 본인 최고 랩의 107% 이내
+const CLIP_LIMIT = 1.3; // 전체: 세션 최고 랩의 130%까지만 축에 담는다
+const DASHES = ['', '6 4', '2 4']; // 같은 팀 선수는 색이 같으므로 선 모양으로 구분
 
 const KO_NAMES = {
   'Pre-Season Testing': '프리시즌 테스트',
@@ -29,32 +30,38 @@ const state = {
   year: null,
   index: null, // 시즌 index.json
   meeting: null,
+  sessions: [], // 이 경기에서 데이터가 있는 세션들 (index 항목)
+  loaded: new Map(), // 세션 키 → 세션 JSON
   session: null,
-  data: null, // 세션 JSON
+  drivers: [], // 이 경기에 나온 모든 선수 (세션 합집합, 선 모양 포함)
   mode: localStorage.getItem('f1.mode') === 'all' ? 'all' : 'clean',
+  sectorMode: localStorage.getItem('f1.sector') === 'avg' ? 'avg' : 'best',
   hidden: new Set(JSON.parse(localStorage.getItem('f1.hidden') || '[]')), // 체크 해제한 선수 코드
 };
 
 // ───────── 유틸 ─────────
 
 function el(tag, attrs = {}, ...children) {
-  const node = tag === 'svg' || attrs.svg ? document.createElementNS(SVG, tag) : document.createElement(tag);
+  const node = attrs.svg ? document.createElementNS(SVG, tag) : document.createElement(tag);
   for (const [k, v] of Object.entries(attrs)) {
     if (k === 'svg' || v == null) continue;
     if (k === 'text') node.textContent = v;
     else node.setAttribute(k, v);
   }
-  node.append(...children);
+  node.append(...children.filter((c) => c != null));
   return node;
 }
 const s = (tag, attrs = {}, ...children) => el(tag, { ...attrs, svg: true }, ...children);
 
 function fmt(sec, digits = 3) {
   if (sec == null || !isFinite(sec)) return '–';
-  const m = Math.floor(sec / 60);
-  const rest = (sec - m * 60).toFixed(digits).padStart(digits ? digits + 3 : 2, '0');
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec - h * 3600) / 60);
+  const rest = (sec - h * 3600 - m * 60).toFixed(digits).padStart(digits ? digits + 3 : 2, '0');
+  if (h) return `${h}:${String(m).padStart(2, '0')}:${rest}`;
   return m ? `${m}:${rest}` : rest;
 }
+const fmtGap = (sec) => `+${sec.toFixed(3)}`;
 
 const getJson = async (url) => {
   const res = await fetch(url, { cache: 'no-cache' });
@@ -68,6 +75,7 @@ function quantile(sorted, q) {
   const hi = Math.ceil(pos);
   return sorted[lo] + (sorted[hi] - sorted[lo]) * (pos - lo);
 }
+const mean = (xs) => xs.reduce((a, b) => a + b, 0) / xs.length;
 
 function meetingLabel(m, all) {
   const base = m.name.replace(/ Grand Prix$/, '');
@@ -80,6 +88,18 @@ const sessionLabel = (name) => KO_SESSIONS[name] ?? name;
 const dateLabel = (iso) =>
   new Date(iso).toLocaleDateString('ko-KR', { month: 'numeric', day: 'numeric' });
 
+const visible = (d) => !state.hidden.has(d.code);
+const styleOf = (code) => state.drivers.find((d) => d.code === code);
+
+// 선수 식별용 짧은 선 견본 (팀 색 + 선 모양)
+function lineSwatch(d) {
+  return s(
+    'svg',
+    { class: 'line-swatch', viewBox: '0 0 22 8', width: 22, height: 8, 'aria-hidden': 'true' },
+    s('line', { x1: 1, x2: 21, y1: 4, y2: 4, stroke: d.color, 'stroke-width': 2.5, 'stroke-dasharray': d.dash }),
+  );
+}
+
 // ───────── 통계 ─────────
 
 function computeStats(driver, mode) {
@@ -87,16 +107,19 @@ function computeStats(driver, mode) {
   const best = Math.min(...all.map((l) => l[1]));
   const used = mode === 'all' ? all : all.filter((l) => !l[2] && l[1] <= best * CLEAN_LIMIT);
   const times = used.map((l) => l[1]).sort((a, b) => a - b);
+  const sector = (laps, k, pick) => {
+    const xs = laps.map((l) => l[4 + k]).filter((v) => v > 0);
+    return xs.length ? pick(xs) : null;
+  };
   return {
     driver,
     best,
-    bestLap: all.find((l) => l[1] === best)[0],
     laps: used,
     total: all.length,
-    avg: times.reduce((a, b) => a + b, 0) / times.length,
+    avg: mean(times),
     median: quantile(times, 0.5),
-    q1: quantile(times, 0.25),
-    q3: quantile(times, 0.75),
+    sectorBest: [0, 1, 2].map((k) => sector(all, k, (xs) => Math.min(...xs))),
+    sectorAvg: [0, 1, 2].map((k) => sector(used, k, mean)),
   };
 }
 
@@ -126,47 +149,57 @@ function renderMeetings() {
 }
 
 function renderSessions() {
-  const m = state.meeting;
-  $('meeting-title').textContent = m.name;
-  $('meeting-sub').textContent = `${m.circuit} · ${m.country} · ${dateLabel(m.start)}`;
   $('sessions').replaceChildren(
-    ...m.sessions
-      .filter((x) => x.laps)
-      .map((x) => {
-        const b = el('button', { type: 'button', 'aria-pressed': x === state.session, text: sessionLabel(x.name) });
-        b.addEventListener('click', () => selectSession(x));
-        return b;
-      }),
+    ...state.sessions.map((x) => {
+      const b = el('button', { type: 'button', 'aria-pressed': x === state.session, text: sessionLabel(x.name) });
+      b.addEventListener('click', () => selectSession(x));
+      return b;
+    }),
   );
 }
 
 // ───────── 선수 체크박스 ─────────
 
-function renderDrivers() {
-  const teams = new Map();
-  for (const d of state.data.drivers) {
-    if (!teams.has(d.team)) teams.set(d.team, []);
-    teams.get(d.team).push(d);
+// 경기 전체 세션에서 선수 목록을 모으고 팀 안 순서대로 선 모양을 정한다.
+function collectDrivers() {
+  const byCode = new Map();
+  for (const x of state.sessions) {
+    for (const d of state.loaded.get(x.key).drivers) {
+      if (!byCode.has(d.code)) byCode.set(d.code, { num: d.num, code: d.code, name: d.name, team: d.team, color: d.color || '#888' });
+    }
   }
+  const drivers = [...byCode.values()].sort((a, b) => a.team.localeCompare(b.team) || a.num - b.num);
+  const seen = new Map();
+  for (const d of drivers) {
+    const i = seen.get(d.team) ?? 0;
+    d.dash = DASHES[Math.min(i, DASHES.length - 1)];
+    seen.set(d.team, i + 1);
+  }
+  state.drivers = drivers;
+}
+
+function renderDrivers() {
   const list = $('driver-list');
   list.replaceChildren();
-  for (const [team, drivers] of teams) {
-    const box = el('div', { class: 'team' });
-    box.append(
-      el('div', { class: 'team-name' }, el('i', { class: 'swatch', style: `background:${drivers[0].color}` }), team || '기타'),
-    );
-    for (const d of drivers) {
-      const input = el('input', { type: 'checkbox' });
-      input.checked = !state.hidden.has(d.code);
-      input.addEventListener('change', () => {
-        if (input.checked) state.hidden.delete(d.code);
-        else state.hidden.add(d.code);
-        saveHidden();
-        renderCharts();
-      });
-      box.append(el('label', { class: 'driver', title: d.name }, input, el('b', { text: d.code }), el('span', { text: d.name })));
+  let box;
+  let team;
+  for (const d of state.drivers) {
+    if (d.team !== team) {
+      team = d.team;
+      box = el('div', { class: 'team' }, el('div', { class: 'team-name', text: team || '기타' }));
+      list.append(box);
     }
-    list.append(box);
+    const input = el('input', { type: 'checkbox' });
+    input.checked = visible(d);
+    input.addEventListener('change', () => {
+      if (input.checked) state.hidden.delete(d.code);
+      else state.hidden.add(d.code);
+      saveHidden();
+      renderAll();
+    });
+    box.append(
+      el('label', { class: 'driver', title: d.name }, input, lineSwatch(d), el('b', { text: d.code }), el('span', { text: d.name })),
+    );
   }
 }
 
@@ -175,64 +208,145 @@ function saveHidden() {
 }
 
 function setAll(on) {
-  for (const d of state.data.drivers) {
+  for (const d of state.drivers) {
     if (on) state.hidden.delete(d.code);
     else state.hidden.add(d.code);
   }
   saveHidden();
   renderDrivers();
-  renderCharts();
+  renderAll();
 }
 
-// ───────── 차트 공통 ─────────
+// ───────── 경기 순위표 ─────────
+
+// 세션 하나를 순위표의 열(들)로 바꾼다. 각 열은 선수 번호 → { pos, text } 맵.
+function rankColumns(entry) {
+  const data = state.loaded.get(entry.key);
+  const results = data.results ?? [];
+  const label = sessionLabel(entry.name);
+
+  if (entry.type === 'Qualifying') {
+    const prefix = entry.name.startsWith('Sprint') ? 'SQ' : 'Q';
+    return [0, 1, 2].map((k) => {
+      const timed = results
+        .filter((r) => Array.isArray(r.time) && r.time[k] != null)
+        .sort((a, b) => a.time[k] - b.time[k]);
+      return {
+        label: `${prefix}${k + 1}`,
+        cells: new Map(timed.map((r, i) => [r.num, { pos: i + 1, text: fmt(r.time[k]) }])),
+      };
+    });
+  }
+
+  if (entry.type === 'Race') {
+    return [
+      {
+        label,
+        final: true,
+        cells: new Map(
+          results.map((r) => {
+            let text = r.status;
+            if (!text && r.pos === 1) text = fmt(r.time);
+            else if (!text && typeof r.gap === 'number') text = fmtGap(r.gap);
+            else if (!text) text = r.gap ?? '';
+            return [r.num, { pos: r.pos, text }];
+          }),
+        ),
+      },
+    ];
+  }
+
+  // 연습: 공식 결과가 없으면 최고 랩으로 직접 순위를 매긴다.
+  let rows = results.filter((r) => r.pos != null && typeof r.time === 'number');
+  if (!rows.length) {
+    rows = data.drivers
+      .map((d) => ({ num: d.num, time: Math.min(...d.laps.map((l) => l[1])) }))
+      .sort((a, b) => a.time - b.time)
+      .map((r, i) => ({ ...r, pos: i + 1 }));
+  }
+  return [{ label, cells: new Map(rows.map((r) => [r.num, { pos: r.pos, text: fmt(r.time) }])) }];
+}
+
+function renderRanking() {
+  const columns = state.sessions.flatMap(rankColumns);
+  // 행 순서: 가장 마지막 세션 순위. 그 세션에 없는 선수는 앞선 세션 순위로 뒤에 붙인다.
+  const order = (d) => {
+    for (let i = columns.length - 1, tier = 0; i >= 0; i--, tier++) {
+      const cell = columns[i].cells.get(d.num);
+      if (cell) return tier * 1000 + (cell.pos ?? 500);
+    }
+    return Infinity;
+  };
+  const rows = state.drivers.filter(visible).sort((a, b) => order(a) - order(b));
+
+  $('ranking').replaceChildren(
+    el('thead', {}, el('tr', {}, el('th', { text: '선수' }), ...columns.map((c) => el('th', { text: c.label })))),
+    el(
+      'tbody',
+      {},
+      ...rows.map((d) =>
+        el(
+          'tr',
+          {},
+          el('td', { title: `${d.name} · ${d.team}` }, lineSwatch(d), el('b', { text: d.code })),
+          ...columns.map((c) => {
+            const cell = c.cells.get(d.num);
+            if (!cell) return el('td', { class: 'none', text: '–' });
+            return el(
+              'td',
+              { class: cell.pos && cell.pos <= 3 ? 'podium' : null },
+              el('b', { text: cell.pos ?? '–' }),
+              el('small', { text: cell.text }),
+            );
+          }),
+        ),
+      ),
+    ),
+  );
+  $('ranking-empty').hidden = rows.length > 0;
+}
+
+// ───────── 선 차트 공통 ─────────
 
 function niceTicks(min, max, target) {
-  const steps = [0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 15, 30, 60, 120];
+  const steps = [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 15, 30, 60, 120];
   const step = steps.find((x) => (max - min) / x <= target) ?? 300;
   const ticks = [];
-  for (let v = Math.ceil(min / step) * step; v <= max + 1e-9; v += step) ticks.push(v);
+  for (let v = Math.ceil(min / step - 1e-9) * step; v <= max + 1e-9; v += step) ticks.push(v);
   return { ticks, digits: step < 0.1 ? 2 : step < 1 ? 1 : 0 };
 }
 
-// 행(선수) 단위 가로 차트의 뼈대: 눈금, 선수 라벨, 행 배경을 그리고 좌표 변환을 돌려준다.
-function frame(host, rows, domain, { rowH, right }) {
-  const width = Math.max(host.clientWidth, 280);
-  const left = 58;
-  const top = 22;
-  const height = top + rows.length * rowH + 6;
-  const plotW = width - left - right;
-  const x = (v) => left + ((v - domain[0]) / (domain[1] - domain[0])) * plotW;
-  const y = (i) => top + i * rowH + rowH / 2;
-
-  const svg = s('svg', { viewBox: `0 0 ${width} ${height}`, height, role: 'img' });
-  const { ticks, digits } = niceTicks(domain[0], domain[1], Math.max(2, Math.floor(plotW / 70)));
-  for (const t of ticks) {
-    svg.append(
-      s('line', { class: 'grid', x1: x(t), x2: x(t), y1: top - 4, y2: height - 4 }),
-      s('text', { x: x(t), y: 11, 'text-anchor': 'middle', text: fmt(t, digits) }),
-    );
+// 단조 3차 보간: 점을 지나되 점 사이에서 출렁이지 않는 곡선
+function smoothPath(pts) {
+  const n = pts.length;
+  if (n < 3) return 'M' + pts.map((p) => `${p[0]},${p[1]}`).join('L');
+  const dx = [];
+  const m = [];
+  for (let i = 0; i < n - 1; i++) {
+    dx[i] = pts[i + 1][0] - pts[i][0];
+    m[i] = (pts[i + 1][1] - pts[i][1]) / dx[i];
   }
-  const groups = rows.map((r, i) => {
-    const g = s('g', { class: 'row' });
-    g.append(
-      s('rect', { class: 'row-bg', x: 0, y: y(i) - rowH / 2, width, height: rowH, rx: 4 }),
-      s('rect', { class: 'sw', x: 6, y: y(i) - 6, width: 4, height: 12, rx: 1, fill: r.driver.color || 'gray' }),
-      s('text', { class: 'code', x: 16, y: y(i) + 4, text: r.driver.code }),
-    );
-    svg.append(g);
-    return g;
-  });
-  host.replaceChildren(svg);
-  return { svg, groups, x, y, left, top, width, plotW, rowH };
+  const t = [m[0]];
+  for (let i = 1; i < n - 1; i++) {
+    t[i] =
+      m[i - 1] * m[i] <= 0
+        ? 0
+        : (3 * (dx[i - 1] + dx[i])) / ((2 * dx[i] + dx[i - 1]) / m[i - 1] + (dx[i] + 2 * dx[i - 1]) / m[i]);
+  }
+  t[n - 1] = m[n - 2];
+  let d = `M${pts[0][0]},${pts[0][1]}`;
+  for (let i = 0; i < n - 1; i++) {
+    const h = dx[i] / 3;
+    d += `C${pts[i][0] + h},${pts[i][1] + t[i] * h} ${pts[i + 1][0] - h},${pts[i + 1][1] - t[i + 1] * h} ${pts[i + 1][0]},${pts[i + 1][1]}`;
+  }
+  return d;
 }
 
 const tooltip = $('tooltip');
 function showTooltip(evt, title, lines) {
   tooltip.replaceChildren(
     el('strong', { text: title }),
-    ...lines.map(([label, value, cls]) =>
-      el('div', {}, el('span', {}, ...(cls ? [el('i', { class: `dot ${cls}` })] : []), label), el('span', { text: value })),
-    ),
+    ...lines.map(([label, value]) => el('div', {}, el('span', { text: label }), el('span', { text: value }))),
   );
   tooltip.hidden = false;
   const { width, height } = tooltip.getBoundingClientRect();
@@ -241,133 +355,248 @@ function showTooltip(evt, title, lines) {
   tooltip.style.left = `${Math.max(8, px)}px`;
   tooltip.style.top = `${py}px`;
 }
-const hideTooltip = () => (tooltip.hidden = true);
 
-// 포인터 위치의 행을 찾아 콜백에 넘긴다. 마크보다 넓은 행 전체가 히트 영역이다.
-function trackRows(f, rows, onMove) {
+let clipId = 0;
+
+// 선수별 선 차트.
+//   series: [{ driver, segments: [[{ x, y, ... }]] }]  — segment 단위로 선이 끊긴다
+//   xTicks: [{ v, label }], yFormat(v, digits), tip(driver, point) → [제목, [[라벨, 값]]]
+function lineChart(host, { series, xDomain, yDomain, xTicks, yFormat, height, smooth, tip }) {
+  const width = Math.max(host.clientWidth, 280);
+  const m = { left: 54, right: 40, top: 10, bottom: 26 };
+  const plotW = width - m.left - m.right;
+  const plotH = height - m.top - m.bottom;
+  const X = (v) => m.left + ((v - xDomain[0]) / (xDomain[1] - xDomain[0])) * plotW;
+  const Y = (v) => m.top + plotH - ((v - yDomain[0]) / (yDomain[1] - yDomain[0])) * plotH;
+
+  const svg = s('svg', { viewBox: `0 0 ${width} ${height}`, height, role: 'img' });
+  const clip = `clip${++clipId}`;
+  svg.append(
+    s('clipPath', { id: clip }, s('rect', { x: m.left, y: m.top - 4, width: plotW + 4, height: plotH + 8 })),
+  );
+
+  const { ticks, digits } = niceTicks(yDomain[0], yDomain[1], Math.max(2, Math.floor(plotH / 44)));
+  for (const t of ticks) {
+    svg.append(
+      s('line', { class: 'grid', x1: m.left, x2: m.left + plotW, y1: Y(t), y2: Y(t) }),
+      s('text', { x: m.left - 8, y: Y(t) + 4, 'text-anchor': 'end', text: yFormat(t, digits) }),
+    );
+  }
+  for (const t of xTicks) {
+    svg.append(
+      s('line', { class: 'grid', x1: X(t.v), x2: X(t.v), y1: m.top, y2: m.top + plotH }),
+      s('text', { x: X(t.v), y: height - 8, 'text-anchor': 'middle', text: t.label }),
+    );
+  }
+
+  const plot = s('g', { 'clip-path': `url(#${clip})` });
+  svg.append(plot);
+  const points = []; // 호버 탐색용
+  const labels = [];
+  for (const sr of series) {
+    const g = s('g', { class: 'series' });
+    const st = styleOf(sr.driver.code);
+    for (const seg of sr.segments) {
+      const pts = seg.map((p) => [X(p.x), Y(p.y)]);
+      if (pts.length === 1) {
+        g.append(s('circle', { cx: pts[0][0], cy: pts[0][1], r: 2.5, fill: st.color }));
+      } else {
+        g.append(
+          s('path', {
+            d: smooth ? smoothPath(pts) : 'M' + pts.map((p) => p.join(',')).join('L'),
+            stroke: st.color,
+            'stroke-dasharray': st.dash,
+          }),
+        );
+      }
+      seg.forEach((p, i) => points.push({ px: pts[i][0], py: pts[i][1], p, sr, g }));
+    }
+    plot.append(g);
+    const last = sr.segments.at(-1)?.at(-1);
+    if (last) labels.push({ y: Math.min(Math.max(Y(last.y), m.top), m.top + plotH), x: X(last.x), sr, g });
+  }
+
+  // 선 끝 라벨: 겹치지 않게 위에서 아래로 밀고, 바닥을 넘으면 다시 끌어올린다.
+  labels.sort((a, b) => a.y - b.y);
+  const gap = 11;
+  for (let i = 1; i < labels.length; i++) labels[i].y = Math.max(labels[i].y, labels[i - 1].y + gap);
+  const over = labels.length ? labels.at(-1).y - (m.top + plotH + 4) : 0;
+  if (over > 0) {
+    labels.at(-1).y -= over;
+    for (let i = labels.length - 2; i >= 0; i--) labels[i].y = Math.min(labels[i].y, labels[i + 1].y - gap);
+  }
+  for (const l of labels) {
+    const text = s('text', { class: 'end-label', x: m.left + plotW + 8, y: l.y + 4, text: l.sr.driver.code });
+    l.g.label = text;
+    svg.append(text);
+  }
+
+  const marker = s('circle', { class: 'marker', r: 4.5, visibility: 'hidden' });
+  svg.append(marker);
+
   let active = null;
   const clear = () => {
-    active?.classList.remove('on');
+    svg.classList.remove('focus');
+    active?.g.classList.remove('on');
+    active?.g.label?.classList.remove('on');
     active = null;
-    hideTooltip();
-    onMove(null);
+    marker.setAttribute('visibility', 'hidden');
+    tooltip.hidden = true;
   };
-  f.svg.addEventListener('pointermove', (evt) => {
-    const box = f.svg.getBoundingClientRect();
-    const scale = f.width / box.width;
-    const i = Math.floor(((evt.clientY - box.top) * scale - f.top) / f.rowH);
-    if (i < 0 || i >= rows.length) return clear();
-    if (active !== f.groups[i]) {
-      active?.classList.remove('on');
-      active = f.groups[i];
-      active.classList.add('on');
+  svg.addEventListener('pointermove', (evt) => {
+    const box = svg.getBoundingClientRect();
+    const scale = width / box.width;
+    const px = (evt.clientX - box.left) * scale;
+    const py = (evt.clientY - box.top) * scale;
+    let hit = null;
+    let bestD = 40 * 40;
+    for (const q of points) {
+      const d = (q.px - px) ** 2 + (q.py - py) ** 2;
+      if (d < bestD) [bestD, hit] = [d, q];
     }
-    onMove(evt, i, (evt.clientX - box.left) * scale);
+    if (!hit) return clear();
+    if (active?.g !== hit.g) {
+      clear();
+      svg.classList.add('focus');
+      hit.g.classList.add('on');
+      hit.g.label?.classList.add('on');
+      plot.append(hit.g); // 강조한 선을 맨 위로
+    }
+    active = hit;
+    marker.setAttribute('cx', hit.px);
+    marker.setAttribute('cy', Math.max(hit.py, m.top - 4));
+    marker.setAttribute('fill', styleOf(hit.sr.driver.code).color);
+    marker.setAttribute('visibility', 'visible');
+    const [title, lines] = tip(hit.sr.driver, hit.p);
+    showTooltip(evt, title, lines);
   });
-  f.svg.addEventListener('pointerleave', clear);
+  svg.addEventListener('pointerleave', clear);
+  host.replaceChildren(svg);
 }
 
-// ───────── 차트 1: 최고 랩 · 평균 랩 ─────────
+// ───────── 차트 1: 랩 진행 (섹터 단위) ─────────
 
-function renderSummary(rows) {
-  const host = $('chart-summary');
-  const wide = host.clientWidth >= 520;
-  const lo = Math.min(...rows.map((r) => r.best));
-  const hi = Math.max(...rows.map((r) => r.avg));
-  const pad = Math.max((hi - lo) * 0.04, 0.05);
-  const f = frame(host, rows, [lo - pad, hi + pad], { rowH: 26, right: wide ? 150 : 76 });
-  const fastest = rows[0].best;
-
-  f.svg.append(
-    s('text', { x: f.width - (wide ? 78 : 4), y: 11, 'text-anchor': 'end', text: '최고' }),
-    ...(wide ? [s('text', { x: f.width - 4, y: 11, 'text-anchor': 'end', text: '평균' })] : []),
-  );
-  rows.forEach((r, i) => {
-    const y = f.y(i);
-    f.groups[i].append(
-      s('line', { class: 'link', x1: f.x(r.best), x2: f.x(r.avg), y1: y, y2: y }),
-      s('circle', { class: 'm-avg', cx: f.x(r.avg), cy: y, r: 5.5 }),
-      s('circle', { class: 'm-best', cx: f.x(r.best), cy: y, r: 5.5 }),
-      s('text', { class: 'val', x: f.width - (wide ? 78 : 4), y: y + 4, 'text-anchor': 'end', text: fmt(r.best) }),
-      ...(wide ? [s('text', { class: 'val', x: f.width - 4, y: y + 4, 'text-anchor': 'end', text: fmt(r.avg) })] : []),
-    );
+// x는 랩·섹터 순서, y는 그 섹터까지 직전 세 섹터를 합친 "한 바퀴 기록".
+// 섹터 길이가 달라도 선이 톱니처럼 튀지 않고, 섹터가 끝날 때마다 값이 갱신된다.
+function renderPace(rows) {
+  const sessionBest = Math.min(...rows.map((r) => r.best));
+  let maxX = 0;
+  const series = rows.map((r) => {
+    const sectors = new Map(); // 섹터 순번 → { 기록, 랩 }
+    for (const lap of r.driver.laps) {
+      for (let k = 0; k < 3; k++) {
+        if (lap[4 + k] > 0) sectors.set((lap[0] - 1) * 3 + k, { t: lap[4 + k], lap });
+      }
+    }
+    const limit = state.mode === 'clean' ? r.best * CLEAN_LIMIT : Infinity;
+    const segments = [];
+    let current = null;
+    for (const i of [...sectors.keys()].sort((a, b) => a - b)) {
+      const [a, b, c] = [sectors.get(i - 2), sectors.get(i - 1), sectors.get(i)];
+      const y = a && b ? a.t + b.t + c.t : null;
+      if (y == null || y > limit) {
+        current = null;
+        continue;
+      }
+      if (!current || current.at(-1).i !== i - 1) segments.push((current = []));
+      current.push({ i, x: i + 1, y, lapNo: c.lap[0], sector: (i % 3) + 1, t: c.t, compound: c.lap[3] });
+      maxX = Math.max(maxX, i + 1);
+    }
+    return { driver: r.driver, segments };
   });
 
-  trackRows(f, rows, (evt, i) => {
-    if (!evt) return;
-    const r = rows[i];
-    showTooltip(evt, r.driver.name, [
-      ['최고 랩', `${fmt(r.best)} (랩 ${r.bestLap})`, 'best'],
-      ['평균 랩', fmt(r.avg), 'avg'],
-      ['1위와 차이', i ? `+${(r.best - fastest).toFixed(3)}` : '–'],
-      ['집계 랩 수', `${r.laps.length} / ${r.total}`],
-    ]);
+  const ys = series.flatMap((sr) => sr.segments.flatMap((seg) => seg.map((p) => p.y)));
+  const host = $('chart-pace');
+  if (!ys.length) {
+    host.replaceChildren(el('p', { class: 'empty', text: '이 세션에는 섹터 기록이 없습니다.' }));
+    $('pace-note').textContent = '';
+    return;
+  }
+  const lo = Math.min(...ys);
+  const top = Math.max(...ys);
+  const hi = Math.min(top, sessionBest * CLIP_LIMIT);
+  const pad = Math.max((hi - lo) * 0.05, 0.05);
+
+  const laps = Math.ceil(maxX / 3);
+  const step = [1, 2, 5, 10, 20].find((x) => laps / x <= Math.max(3, host.clientWidth / 60)) ?? 50;
+  const xTicks = [];
+  for (let n = step; n <= laps; n += step) xTicks.push({ v: n * 3, label: `${n}랩` });
+
+  lineChart(host, {
+    series,
+    xDomain: [1, Math.max(maxX, 4)],
+    yDomain: [lo - pad, hi + pad],
+    xTicks,
+    yFormat: (v, digits) => fmt(v, digits),
+    height: 460,
+    smooth: true,
+    tip: (d, p) => [
+      `${d.name} · ${p.lapNo}랩 섹터 ${p.sector}`,
+      [
+        ['한 바퀴 환산', fmt(p.y)],
+        [`섹터 ${p.sector} 기록`, fmt(p.t)],
+        ...(p.compound ? [['타이어', COMPOUNDS[p.compound] ?? p.compound]] : []),
+      ],
+    ],
   });
+  $('pace-note').textContent =
+    'x축은 랩·섹터 순서(섹터 하나가 한 칸), y축은 그 섹터까지 직전 세 섹터를 합친 한 바퀴 기록입니다. ' +
+    (state.mode === 'clean'
+      ? '본인 최고 랩의 107%를 넘는 구간(피트, 세이프티카 등)은 선을 끊었습니다.'
+      : top > hi
+        ? `${fmt(hi, 1)}보다 느린 구간은 위쪽으로 잘려 보입니다.`
+        : '');
 }
 
-// ───────── 차트 2: 랩타임 분포 ─────────
+// ───────── 차트 2: 섹터별 비교 ─────────
 
-function renderDist(rows) {
-  const host = $('chart-dist');
-  const times = rows.flatMap((r) => r.laps.map((l) => l[1]));
-  const lo = Math.min(...times);
-  const max = Math.max(...times);
-  const hi = Math.min(max, lo * CLIP_LIMIT);
-  const pad = Math.max((hi - lo) * 0.03, 0.05);
-  const domain = [lo - pad, hi + pad];
-  const rowH = 30;
-  const f = frame(host, rows, domain, { rowH, right: 12 });
-  const cx = (t) => f.x(Math.min(t, hi));
-  // 랩 번호로 정한 고정 지터: 겹친 점을 세로로 흩되 다시 그려도 위치가 같다.
-  const jitter = (lap) => (((lap * 0.618034) % 1) - 0.5) * (rowH - 14);
-
-  const dots = rows.map((r, i) => {
-    const y = f.y(i);
-    const circles = r.laps.map((l) => {
-      const c = s('circle', { class: 'lap', cx: cx(l[1]), cy: y + jitter(l[0]), r: 3 });
-      f.groups[i].append(c);
-      return c;
-    });
-    f.groups[i].append(
-      s('rect', {
-        class: 'iqr', x: cx(r.q1), y: y - 9, rx: 2,
-        width: Math.max(cx(r.q3) - cx(r.q1), 1), height: 18,
-      }),
-      s('line', { class: 'median', x1: cx(r.median), x2: cx(r.median), y1: y - 9, y2: y + 9 }),
-    );
-    return circles;
+function renderSectors(rows, allStats) {
+  const key = state.sectorMode === 'avg' ? 'sectorAvg' : 'sectorBest';
+  // 기준은 체크 여부와 무관하게 세션 전체에서 가장 빠른 기록
+  const ref = [0, 1, 2].map((k) => Math.min(...allStats.map((r) => r[key][k]).filter((v) => v != null)));
+  const series = rows.map((r) => {
+    const pts = [0, 1, 2]
+      .filter((k) => r[key][k] != null && isFinite(ref[k]))
+      .map((k) => ({ x: k + 1, y: r[key][k] - ref[k], t: r[key][k], sector: k + 1 }));
+    // 섹터가 빠지면 그 사이는 잇지 않는다
+    const segments = [];
+    for (const p of pts) {
+      if (segments.length && segments.at(-1).at(-1).x === p.x - 1) segments.at(-1).push(p);
+      else segments.push([p]);
+    }
+    return { driver: r.driver, segments };
   });
 
-  $('dist-note').textContent =
-    max > hi ? `${fmt(hi, 1)}보다 느린 랩은 오른쪽 끝에 모아 표시했습니다.` : '';
-
-  let lit = null;
-  trackRows(f, rows, (evt, i, px) => {
-    lit?.classList.remove('on');
-    lit = null;
-    if (!evt) return;
-    const r = rows[i];
-    let nearest = 0;
-    r.laps.forEach((l, j) => {
-      if (Math.abs(cx(l[1]) - px) < Math.abs(cx(r.laps[nearest][1]) - px)) nearest = j;
-    });
-    const lap = r.laps[nearest];
-    lit = dots[i][nearest];
-    lit.classList.add('on');
-    showTooltip(evt, `${r.driver.name} · 랩 ${lap[0]}`, [
-      ['랩타임', fmt(lap[1])],
-      ...(lap[3] ? [['타이어', COMPOUNDS[lap[3]] ?? lap[3]]] : []),
-      ...(lap[2] ? [['비고', '피트아웃 랩']] : []),
-      ['중앙값', fmt(r.median)],
-      ['중간 50%', `${fmt(r.q1)} – ${fmt(r.q3)}`],
-    ]);
+  const ys = series.flatMap((sr) => sr.segments.flatMap((seg) => seg.map((p) => p.y)));
+  const host = $('chart-sectors');
+  if (!ys.length) {
+    host.replaceChildren(el('p', { class: 'empty', text: '이 세션에는 섹터 기록이 없습니다.' }));
+    return;
+  }
+  const hi = Math.max(...ys, 0.1);
+  const what = state.sectorMode === 'avg' ? '평균' : '최고';
+  lineChart(host, {
+    series,
+    xDomain: [0.85, 3.15],
+    yDomain: [-hi * 0.03, hi * 1.05],
+    xTicks: [1, 2, 3].map((k) => ({ v: k, label: `섹터 ${k}` })),
+    yFormat: (v, digits) => (Math.abs(v) < 1e-9 ? '0' : `+${v.toFixed(Math.max(digits, 1))}`),
+    height: 380,
+    smooth: false,
+    tip: (d, p) => [
+      `${d.name} · 섹터 ${p.sector}`,
+      [
+        [`${what} 기록`, fmt(p.t)],
+        ['가장 빠른 선수와 차이', p.y < 0.0005 ? '가장 빠름' : `${fmtGap(p.y)}초`],
+      ],
+    ],
   });
 }
 
 // ───────── 표 ─────────
 
 function renderTable(rows) {
-  const head = ['#', '선수', '팀', '최고 랩', '평균 랩', '중앙값', '1위와 차이', '집계 랩'];
+  const head = ['#', '선수', '팀', '최고 랩', '1위와 차이', '평균 랩', '중앙값', '섹터 1', '섹터 2', '섹터 3', '집계 랩'];
   const fastest = rows[0].best;
   $('table').replaceChildren(
     el('thead', {}, el('tr', {}, ...head.map((h) => el('th', { text: h })))),
@@ -379,12 +608,13 @@ function renderTable(rows) {
           'tr',
           {},
           el('td', { text: i + 1 }),
-          el('td', {}, el('i', { class: 'swatch', style: `background:${r.driver.color}` }), r.driver.code),
+          el('td', {}, lineSwatch(styleOf(r.driver.code)), r.driver.code),
           el('td', { text: r.driver.team }),
           el('td', { text: fmt(r.best) }),
+          el('td', { text: i ? fmtGap(r.best - fastest) : '–' }),
           el('td', { text: fmt(r.avg) }),
           el('td', { text: fmt(r.median) }),
-          el('td', { text: i ? `+${(r.best - fastest).toFixed(3)}` : '–' }),
+          ...r.sectorBest.map((v) => el('td', { text: fmt(v) })),
           el('td', { text: `${r.laps.length} / ${r.total}` }),
         ),
       ),
@@ -392,29 +622,38 @@ function renderTable(rows) {
   );
 }
 
-function renderCharts() {
-  for (const b of $('lap-filter').children) b.setAttribute('aria-pressed', b.dataset.mode === state.mode);
+function pressed(group, attr, value) {
+  for (const b of $(group).children) b.setAttribute('aria-pressed', b.dataset[attr] === value);
+}
+
+function renderSession() {
+  pressed('lap-filter', 'mode', state.mode);
+  pressed('sector-mode', 'sector', state.sectorMode);
   $('filter-note').textContent =
     state.mode === 'clean'
       ? '피트아웃 랩과 본인 최고 랩의 107%를 넘는 랩 제외'
       : '기록된 모든 랩 (세이프티카·인랩 포함)';
 
-  const rows = state.data.drivers
-    .filter((d) => !state.hidden.has(d.code) && d.laps.length)
-    .map((d) => computeStats(d, state.mode))
-    .sort((a, b) => a.best - b.best);
+  const data = state.loaded.get(state.session.key);
+  const allStats = data.drivers.filter((d) => d.laps.length).map((d) => computeStats(d, state.mode));
+  const rows = allStats.filter((r) => visible(r.driver)).sort((a, b) => a.best - b.best);
 
   if (!rows.length) {
-    for (const id of ['chart-summary', 'chart-dist']) {
+    for (const id of ['chart-pace', 'chart-sectors']) {
       $(id).replaceChildren(el('p', { class: 'empty', text: '선수를 한 명 이상 선택하세요.' }));
     }
     $('table').replaceChildren();
-    $('dist-note').textContent = '';
+    $('pace-note').textContent = '';
     return;
   }
-  renderSummary(rows);
-  renderDist(rows);
+  renderPace(rows);
+  renderSectors(rows, allStats);
   renderTable(rows);
+}
+
+function renderAll() {
+  renderRanking();
+  renderSession();
 }
 
 // ───────── 선택 흐름 ─────────
@@ -431,9 +670,6 @@ async function selectSeason(year, want = {}) {
     $('status').textContent = `${year} 시즌 데이터가 아직 없습니다.`;
     return;
   }
-  const meeting = meetings.find((m) => m.key === want.meeting) ?? meetings.at(-1);
-  await selectMeeting(meeting, want.session);
-
   const latest = state.index.meetings
     .flatMap((m) => m.sessions)
     .map((x) => x.fetched)
@@ -441,26 +677,34 @@ async function selectSeason(year, want = {}) {
     .sort()
     .at(-1);
   $('updated').textContent = latest ? `· 최근 갱신 ${new Date(latest).toLocaleString('ko-KR')}` : '';
+
+  await selectMeeting(meetings.find((m) => m.key === want.meeting) ?? meetings.at(-1), want.session);
 }
 
 async function selectMeeting(meeting, wantSession) {
   state.meeting = meeting;
   renderMeetings();
   const sessions = meeting.sessions.filter((x) => x.laps);
-  await selectSession(sessions.find((x) => x.key === wantSession) ?? sessions.at(-1));
-}
+  const files = await Promise.all(sessions.map((x) => getJson(`data/${state.year}/${x.key}.json`)));
+  if (state.meeting !== meeting) return; // 그사이 다른 경기를 골랐다
+  state.sessions = sessions;
+  state.loaded = new Map(sessions.map((x, i) => [x.key, files[i]]));
+  collectDrivers();
 
-async function selectSession(session) {
-  state.session = session;
-  renderSessions();
-  history.replaceState(null, '', `#${state.year}/${state.meeting.key}/${session.key}`);
-  const data = await getJson(`data/${state.year}/${session.key}.json`);
-  if (state.session !== session) return; // 그사이 다른 세션을 골랐다
-  state.data = data;
+  $('meeting-title').textContent = meeting.name;
+  $('meeting-sub').textContent = `${meeting.circuit} · ${meeting.country} · ${dateLabel(meeting.start)}`;
   $('status').hidden = true;
   $('main').hidden = false;
   renderDrivers();
-  renderCharts();
+  renderRanking();
+  selectSession(sessions.find((x) => x.key === wantSession) ?? sessions.at(-1));
+}
+
+function selectSession(session) {
+  state.session = session;
+  history.replaceState(null, '', `#${state.year}/${state.meeting.key}/${session.key}`);
+  renderSessions();
+  renderSession();
 }
 
 // ───────── 시작 ─────────
@@ -472,9 +716,22 @@ $('lap-filter').addEventListener('click', (evt) => {
   if (!mode) return;
   state.mode = mode;
   localStorage.setItem('f1.mode', mode);
-  renderCharts();
+  renderSession();
 });
-new ResizeObserver(() => state.data && !$('main').hidden && renderCharts()).observe($('chart-summary'));
+$('sector-mode').addEventListener('click', (evt) => {
+  const mode = evt.target.dataset?.sector;
+  if (!mode) return;
+  state.sectorMode = mode;
+  localStorage.setItem('f1.sector', mode);
+  renderSession();
+});
+let lastWidth = 0;
+new ResizeObserver(([entry]) => {
+  const w = Math.round(entry.contentRect.width);
+  if (w === lastWidth || !state.session || $('main').hidden) return;
+  lastWidth = w;
+  renderSession();
+}).observe($('chart-pace'));
 
 try {
   state.seasons = await getJson('data/seasons.json');

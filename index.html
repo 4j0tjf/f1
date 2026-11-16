@@ -16,11 +16,8 @@
 
 <main id="main" hidden>
   <div class="session-bar">
-    <div>
-      <h2 id="meeting-title"></h2>
-      <p id="meeting-sub" class="muted"></p>
-    </div>
-    <nav id="sessions" class="pills" aria-label="세션"></nav>
+    <h2 id="meeting-title"></h2>
+    <p id="meeting-sub" class="muted"></p>
   </div>
 
   <div class="layout">
@@ -36,8 +33,21 @@
     </aside>
 
     <div class="charts">
+      <section class="card">
+        <div class="card-head">
+          <h3>세션별 순위</h3>
+          <span class="muted">큰 숫자가 순위, 아래는 기록 (레이스는 1위와의 차이)</span>
+        </div>
+        <div class="table-wrap"><table id="ranking" class="ranking"></table></div>
+        <p id="ranking-empty" class="empty" hidden>선수를 한 명 이상 선택하세요.</p>
+      </section>
+
       <div class="filter-row">
-        <span class="muted">평균·분포에 쓸 랩</span>
+        <h3>세션 기록</h3>
+        <nav id="sessions" class="pills" aria-label="세션"></nav>
+      </div>
+      <div class="filter-row">
+        <span class="muted">그래프·평균에 쓸 랩</span>
         <div class="pills" id="lap-filter" role="group" aria-label="랩 필터">
           <button type="button" data-mode="clean">클린 랩</button>
           <button type="button" data-mode="all">전체 랩</button>
@@ -47,25 +57,23 @@
 
       <section class="card">
         <div class="card-head">
-          <h3>최고 랩 · 평균 랩</h3>
-          <div class="legend">
-            <span><i class="dot best"></i>최고 랩</span>
-            <span><i class="dot avg"></i>평균 랩</span>
-          </div>
+          <h3>랩 진행 (섹터 단위)</h3>
+          <span class="muted">아래로 갈수록 빠름 · 선 색은 팀, 선 모양은 선수</span>
         </div>
-        <div id="chart-summary" class="chart"></div>
+        <div id="chart-pace" class="chart"></div>
+        <p class="muted note" id="pace-note"></p>
       </section>
 
       <section class="card">
         <div class="card-head">
-          <h3>랩타임 분포</h3>
-          <div class="legend">
-            <span><i class="dot lap"></i>랩 1개</span>
-            <span><i class="box"></i>중간 50% 구간과 중앙값</span>
+          <h3>섹터별 비교</h3>
+          <div class="pills" id="sector-mode" role="group" aria-label="섹터 기록 기준">
+            <button type="button" data-sector="best">최고 기록</button>
+            <button type="button" data-sector="avg">평균 기록</button>
           </div>
         </div>
-        <div id="chart-dist" class="chart"></div>
-        <p class="muted note" id="dist-note"></p>
+        <div id="chart-sectors" class="chart"></div>
+        <p class="muted note">y축은 각 섹터에서 가장 빠른 선수와의 차이(초)입니다. 0에 가까울수록 그 섹터에서 빠릅니다.</p>
       </section>
 
       <section class="card">
