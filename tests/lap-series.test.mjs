@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {lapSegments,cleanLaps,pitLaps} from '../assets/lap-series.js';
+import {lapSegments,cleanLaps,pitLaps,paceLaps} from '../assets/lap-series.js';
 
 const laps = [[1,90,0,'S',30,30,30],[2,92,0,'S',29,31,32],[3,120,0,'S',40,40,40],[4,160,1,'M',60,50,50],[5,89,0,'M',28,30,31],[6,91,0,'M',30,30,31]];
 test('the graph reports actual laps rather than mixed-sector rolling sums',()=>{
@@ -15,4 +15,11 @@ test('clean mode excludes pit entry, pit exit and slow laps and leaves a gap',()
 test('missing lap numbers are not joined, and empty data stays empty',()=>{
   assert.equal(lapSegments([laps[0],laps[4]],'all').length,2);
   assert.deepEqual(lapSegments([],'clean'),[]);
+});
+test('clean graph also drops laps well off the driver\'s usual pace',()=>{
+  const race=[[1,90,0,'M'],[2,90.5,0,'M'],[3,95,0,'M'],[4,91,0,'M'],[5,90.2,0,'M']];
+  assert.deepEqual(cleanLaps(race).map(l=>l[0]),[1,2,3,4,5]);
+  assert.deepEqual(paceLaps(race).map(l=>l[0]),[1,2,4,5]);
+  assert.deepEqual(lapSegments(race,'clean').map(s=>s.map(p=>p.x)),[[1,2],[4,5]]);
+  assert.deepEqual(paceLaps([]),[]);
 });

@@ -1,7 +1,7 @@
 // F1 랩타임 뷰어. data/ 아래 JSON만 읽는 정적 페이지다 (scripts/fetch.mjs가 생성).
 
 import { readPreference, writePreference, readHiddenDrivers } from './preferences.js?v=20261116.1';
-import { cleanLaps, lapSegments, pitLaps } from './lap-series.js?v=20261116.2';
+import { cleanLaps, lapSegments, pitLaps } from './lap-series.js?v=20261116.4';
 import { renderCarUpgrades } from './car-upgrades.js?v=20261116.3';
 
 const $ = (id) => document.getElementById(id);
@@ -578,7 +578,7 @@ function renderPace(rows, data) {
     (periods.length ? '색 띠는 선두 랩 기준 세이프티카(SC)·가상 세이프티카(VSC)·적기 구간' : '') +
     (hasPits || periods.length ? '입니다. ' : '') +
     (state.mode === 'clean'
-      ? '클린 랩은 피트 진입·출발 랩과 본인 최고 랩의 107%를 넘는 기록을 제외합니다.'
+      ? '클린 랩 보기에서는 피트 진입·출발 랩과, 본인 평소 페이스(중앙값)보다 3.5% 넘게 느린 랩(세이프티카, 황기 등)을 잘라내 선이 끊깁니다. 전체 랩으로 바꾸면 모두 보입니다.'
       : '전체 랩은 긴 피트·적기 중단 랩까지 모두 표시하므로 세로축 범위가 넓어질 수 있습니다.');
 }
 

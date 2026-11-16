@@ -15,7 +15,7 @@
     status.replaceChildren(text, retry);
   }
   timer = setTimeout(() => failed('화면을 불러오는 데 시간이 걸리고 있습니다. 연결 상태를 확인해 주세요.'), 30000);
-  import(new URL('app.js?v=20261116.3', script.src).href)
+  import(new URL('app.js?v=20261116.4', script.src).href)
     .catch(error => {
       console.error(error);
       failed('화면 실행에 실패했습니다.');
