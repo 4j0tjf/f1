@@ -55,6 +55,38 @@ button { font: inherit; color: inherit; cursor: pointer; }
   content: ""; display: inline-block; width: 4px; height: 16px;
   background: var(--accent); margin-right: 8px; vertical-align: -2px; border-radius: 1px;
 }
+.updates-link { margin-left: auto; font-size: 12px; white-space: nowrap; }
+.car-upgrades { margin-bottom: 18px; scroll-margin-top: 12px; }
+.upgrade-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 12px; }
+.upgrade-controls select { max-width: 100%; padding: 5px 8px; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 6px; font: inherit; }
+.team-upgrade { border-top: 1px solid var(--border); padding: 10px 0; }
+.team-upgrade summary { cursor: pointer; font-size: 13px; font-weight: 600; }
+.team-upgrade ul { padding-left: 20px; margin: 8px 0 0; }
+.team-upgrade li { padding: 6px 0; font-size: 13px; }
+.team-upgrade li p { color: var(--text-2); margin: 3px 0; }
+.team-upgrade .upgrade-purpose { margin: 6px 0; font-size: 12px; }
+.team-upgrade .upgrade-explanation { margin: 6px 0; line-height: 1.7; max-width: 88ch; }
+.explanation-label { display: inline-block; margin-right: 8px; color: var(--text); font-size: 11px; font-weight: 600; }
+.expert-note { padding: 12px 14px; margin: 12px 0; border-left: 3px solid var(--accent); border-radius: 4px; background: var(--hover); }
+.expert-note > strong { font-size: 12px; }
+.expert-summary { margin: 6px 0; font-size: 13px; line-height: 1.7; }
+.expert-unavailable { margin: 10px 0; }
+.upgrade-source { font-size: 12px; color: var(--text-2); text-underline-offset: 3px; }
+.no-updates { padding-top: 8px; color: var(--text-2); font-size: 12px; }
+.no-updates summary { cursor: pointer; }
+@media (max-width: 600px) { .component-original { display: block; } }
+.release-notes { max-width: 1240px; margin: 18px auto 0; }
+.release-notes h2 { font-size: 15px; }
+.release-notes details + details { border-top: 1px solid var(--border); margin-top: 10px; padding-top: 10px; }
+.release-notes summary { cursor: pointer; }
+.release-notes summary strong { margin-right: 12px; font-size: 13px; }
+.release-notes ul { margin: 10px 0 0; padding-left: 20px; color: var(--text-2); font-size: 13px; }
+.release-notes li + li { margin-top: 4px; }
+@media (max-width: 1280px) { .release-notes { margin-left: 20px; margin-right: 20px; } }
+@media (max-width: 600px) {
+  .top { flex-wrap: wrap; gap: 10px; }
+  .release-notes summary .muted { display: block; margin-left: 16px; margin-top: 3px; }
+}
 
 .tabs { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: thin; }
 .tabs button {

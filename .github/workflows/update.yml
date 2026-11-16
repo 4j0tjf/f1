@@ -13,7 +13,7 @@ on:
         type: boolean
         default: false
   push:
-    branches: [main]
+    branches: [main, claude/f1-2026-lap-time-analysis-6bu26d]
     paths-ignore: ['README.md']
 
 permissions:
